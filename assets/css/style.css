@@ -42,6 +42,18 @@ body {
 
 .header-link {
     cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 3px solid #13131300;
+
+
+}
+
+.header-link:hover {
+    background-color: white;
+    color: #131313;
+    border: 3px solid #131313;
+    cursor: pointer;
 
 }
 
@@ -88,16 +100,14 @@ body {
     font-size: 18px;
 }
 
-.item-desc{
+.item-desc {}
 
-}
-
-.diverderr{
+.diverderr {
     width: 100px;
     border-top: 5px solid #131313;
 }
 
-.add-to-cart{
+.add-to-cart {
     color: white;
     background-color: #131313;
     width: fit-content;
@@ -106,9 +116,9 @@ body {
     margin-top: 30px;
 }
 
-.add-to-cart:hover{
+.add-to-cart:hover {
     background-color: white;
-    color:#131313;
+    color: #131313;
     border: 3px solid #131313;
     cursor: pointer;
 }
