@@ -26,6 +26,7 @@ body {
     /* For WebKit-based browsers */
     text-stroke: 1px black;
     /* For other browsers */
+    cursor: pointer;
 }
 
 .header-links-icons {
