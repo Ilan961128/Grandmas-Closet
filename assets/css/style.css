@@ -1,0 +1,46 @@
+body {
+    font-family: "Roboto Mono", serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #131313;
+    margin: 0;
+    padding: 0;
+    background-color: #fffcee;
+}
+
+.header {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 40px;
+    margin-right: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #131313;
+}
+
+.header-title {
+    font-size: 40px;
+    color: white;
+    -webkit-text-stroke: 1px black;
+    /* For WebKit-based browsers */
+    text-stroke: 1px black;
+    /* For other browsers */
+}
+
+.header-links-icons {
+    display: flex;
+    gap: 40px;
+    font-size: 20px;
+}
+
+.header-links {
+    display: flex;
+    gap: 30px;
+}
+
+.header-link {
+    cursor: pointer;
+
+}
+
