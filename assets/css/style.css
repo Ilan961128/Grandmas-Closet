@@ -106,5 +106,8 @@ body {
 }
 
 .add-to-cart:hover{
-    
+    background-color: white;
+    color:#131313;
+    border: 3px solid #131313;
+    cursor: pointer;
 }
