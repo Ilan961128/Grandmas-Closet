@@ -80,6 +80,7 @@ body {
     object-fit: cover;
     -webkit-filter: drop-shadow(15px 15px 0px #131313);
     filter: drop-shadow(15px 15px 0px #131313);
+    border: 2px solid #131313;
 }
 
 .item-title {
@@ -109,27 +110,26 @@ body {
 
 .divider {
     width: 100%;
-    height: 30px; /* Adjust height as needed */
-    background: repeating-linear-gradient(
-      90deg, 
-      black 0px, 
-      black 30px, 
-      white 30px, 
-      white 60px
-    );
-  }
+    height: 30px;
+    /* Adjust height as needed */
+    background: repeating-linear-gradient(90deg,
+            black 0px,
+            black 30px,
+            white 30px,
+            white 60px);
+}
+
 .divider-reversed {
     width: 100%;
-    height: 30px; /* Adjust height as needed */
-    background: repeating-linear-gradient(
-      90deg, 
-      white 0px,
-      white 30px, 
-      black 30px, 
-      black 60px
-    );
-  }
-  
+    height: 30px;
+    /* Adjust height as needed */
+    background: repeating-linear-gradient(90deg,
+            white 0px,
+            white 30px,
+            black 30px,
+            black 60px);
+}
+
 
 .add-to-cart {
     color: white;
@@ -145,4 +145,74 @@ body {
     color: #131313;
     border: 3px solid #131313;
     cursor: pointer;
+}
+
+
+
+
+
+.glance-title {
+    margin-left: 60px;
+    margin-right: 60px;
+    font-size: 40px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.cardbox {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 300px;
+    height: 400px;
+    padding: 20px;
+}
+
+.card img {
+    -webkit-filter: drop-shadow(15px 15px 0px #131313);
+    filter: drop-shadow(15px 15px 0px #131313);
+    border: 2px solid #131313;
+
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-price {
+    font-size: 16px;
+}
+
+
+
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background-color: #131313;
+    margin-top: 150px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
 }
