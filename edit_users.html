@@ -25,7 +25,6 @@
         text-align: center;
     }
 
-    /* Alternate row colors */
     tr:nth-child(even) {
         background-color: #4c4c4c;
     }
@@ -34,12 +33,9 @@
         background-color: #2f2f2f;
     }
 
-    /* Different color for the header row */
     thead th {
         background-color: #d26e2b;
-        /* Set your desired header color */
         color: white;
-        /* Ensures text contrast */
     }
 </style>
 
@@ -90,7 +86,9 @@
     </div>
 
     <!-- edit users -->
-    <a href="/control_panel.html"><h1 class="text-3xl font-bold pt-4 flex justify-start ml-[40px] underline">Back To Panel</h1></a>
+    <a href="/control_panel.html">
+        <h1 class="text-3xl font-bold pt-4 flex justify-start ml-[40px] underline">Back To Panel</h1>
+    </a>
     <h1 class="text-5xl font-bold pt-5 flex justify-center">Edit Users</h1>
     <div class="flex flex-row justify-center">
         <table id="userTable" class="text-md my-14 text-white">
@@ -152,6 +150,12 @@
                     </div>
                 </div>
                 <div class="form-row flex flex-col w-[80%] mx-auto">
+
+                    <!-- ID -->
+                    <div class="form-group flex flex-col mb-3 ">
+                        <label for="id" class="text-white">ID</label>
+                        <input type="text" id="id" name="id" class="form-control border-2 border-[#131313]" disabled />
+                    </div>
 
                     <!-- First Name -->
                     <div class="form-group flex flex-col mb-3 ">
@@ -259,31 +263,31 @@
         tableBody.empty();
 
         users.forEach(function (user) {
-            const profilePicUrl = user.profile_pic || "https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png";
+            const truncate = (text) => text.length > 15 ? text.substring(0, 15) + '...' : text;
+
             const row = `
-                        <tr>
-                            <td>${user._id}</td>
-                            <td>${user.first_name}</td>
-                            <td>${user.last_name}</td>
-                            <td>${user.email}</td>
-                            <td>${user.password}</td>
-                            <td>${user.admin}</td>
-                            <td>${user.secret_phrase}</td>
-                            <td>
-                                <i onclick="updateUser('${user._id}')" class="fa fa-edit" style="font-size:24px; margin-right: 10px; cursor: pointer"></i>
-                                <i onclick="deleteUser('${user._id}')" class="fa fa-trash" style="font-size:24px;color:red; cursor: pointer"></i>
-                            </td>
-                        </tr>
-                    `;
+            <tr>
+                <td>${truncate(user._id)}</td>
+                <td>${truncate(user.first_name)}</td>
+                <td>${truncate(user.last_name)}</td>
+                <td>${truncate(user.email)}</td>
+                <td>${truncate(user.password)}</td>
+                <td>${truncate(user.admin)}</td>
+                <td>${truncate(user.secret_phrase)}</td>
+                <td>
+                    <i onclick="updateUser('${user._id}')" class="fa fa-edit" style="font-size:24px; margin-right: 10px; cursor: pointer"></i>
+                    <i onclick="deleteUser('${user._id}')" class="fa fa-trash" style="font-size:24px;color:red; cursor: pointer"></i>
+                </td>
+            </tr>
+        `;
             tableBody.append(row);
         });
     }
 
+
     window.deleteUser = function (userId) {
-        // Show the delete confirmation modal
         document.getElementById("userDeleteModal").style.display = "inline";
 
-        // Set up click event for the "Delete" button in the modal
         $('#deleteChangesBtn').off('click').on('click', function () {
             console.log(`Delete user with ID: ${userId}`);
             $.post(`http://localhost:5500/delete_user/${userId}`, function (data) {
@@ -306,6 +310,7 @@
         console.log(userToUpdate);
 
         document.getElementById("userUpdateModal").style.display = "inline";
+        $("#id").val(userToUpdate._id);
         $("#firstName").val(userToUpdate.first_name);
         $("#lastName").val(userToUpdate.last_name);
         $("#email").val(userToUpdate.email);
@@ -327,7 +332,6 @@
 
             console.log(updatedUser);
 
-            // Update the user using the API
             fetch(`http://localhost:5500/update_user/${userId}`, {
                 method: 'POST',
                 headers: {
