@@ -177,6 +177,7 @@ body {
     gap: 40px;
     width: 300px;
     padding: 20px;
+    cursor: pointer;
 }
 
 .card img {
