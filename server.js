@@ -64,6 +64,10 @@ app.get("/checkSession", async (req, res) => {
     if (session.user_id === null) {
         return res.status(401).json({ message: "Unauthorized" });
     }
+    if (session.admin === "master") {
+        return res.status(200).json({ message: "Authorized", admin: "master" });
+    }
+
     res.status(200).json({ message: "Authorized" });
 });
 

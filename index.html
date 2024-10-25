@@ -44,6 +44,9 @@
                 <a id="signOutLink" onclick="signout()" style="text-decoration: none; color: #131313; display: none;">
                     <span class="header-link">Sign Out</span>
                 </a>
+                <a href="/control_panel.html" id="controlPanelLink" style="text-decoration: none; color: #131313; display: none;">
+                    <span class="header-link">Admin Panel</span>
+                </a>
             </div>
             <div>
                 <i class="fas fa-search"></i>
@@ -161,6 +164,12 @@
                     document.getElementById("signUpLink").style.display = "inline";
                     document.getElementById("signInLink").style.display = "inline";
                     document.getElementById("signOutLink").style.display = "none";
+                }
+                else if (data.message === "Admin") {
+                    document.getElementById("signUpLink").style.display = "none";
+                    document.getElementById("signInLink").style.display = "none";
+                    document.getElementById("signOutLink").style.display = "inline";
+                    document.getElementById("controlPanelLink").style.display = "inline";
                 }
             })
             .catch(error => console.error("Error checking session:", error));
