@@ -200,8 +200,21 @@ const itemData = [
     },
 ];
 
-
-
+function signout() {
+    fetch('http://localhost:5500/signout', {
+        method: 'GET',
+    })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = 'index.html';
+            } else {
+                console.error('Sign out failed:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Sign out failed:', error);
+        });
+}
 
 // Initialize the cart by checking for existing data in localStorage
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -372,28 +385,41 @@ function displayItem() {
 
 // Function to add item to cart based on item ID
 function addToCart(itemId) {
+    fetch('http://localhost:5500/checkSession')
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Unauthorized") {
+                window.location.href = "signin.html";
+            }
+            else {
+                const item = itemData.find(product => product.id === itemId);
+
+                if (!item) {
+                    console.error("Item not found!");
+                    return;
+                }
+
+                // Check if the item is already in the cart (based on id and size)
+                const existingItem = cart.find(cartItem => cartItem.id === item.id && cartItem.size === item.size);
+
+                if (existingItem) {
+                    // If the item exists, increment the quantity
+                    existingItem.quantity += 1;
+                } else {
+                    // Otherwise, add a new entry for the item, including imgSrc
+                    cart.push({ ...item, quantity: 1, imgSrc: item.imgSrc });
+                }
+
+                // Save updated cart to localStorage
+                localStorage.setItem("cart", JSON.stringify(cart));
+                console.log("Item added to cart:", item);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
     // Find the item in itemData based on the ID
-    const item = itemData.find(product => product.id === itemId);
 
-    if (!item) {
-        console.error("Item not found!");
-        return;
-    }
-
-    // Check if the item is already in the cart (based on id and size)
-    const existingItem = cart.find(cartItem => cartItem.id === item.id && cartItem.size === item.size);
-
-    if (existingItem) {
-        // If the item exists, increment the quantity
-        existingItem.quantity += 1;
-    } else {
-        // Otherwise, add a new entry for the item, including imgSrc
-        cart.push({ ...item, quantity: 1, imgSrc: item.imgSrc });
-    }
-
-    // Save updated cart to localStorage
-    localStorage.setItem("cart", JSON.stringify(cart));
-    console.log("Item added to cart:", item);
 }
 
 // Function to retrieve cart items from localStorage

@@ -59,6 +59,14 @@ app.use(
 );
 app.use(bodyParser.json());
 
+// ---------- Check Session ----------
+app.get("/checkSession", async (req, res) => {
+    if (session.user_id === null) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    res.status(200).json({ message: "Authorized" });
+});
+
 // ---------- Create User ----------
 app.post("/user", async (req, res) => {
     try {
@@ -153,6 +161,19 @@ app.get("/check_email/:email", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+// ---------- Sign out ---------
+app.get("/signout", async (req, res) => {
+    if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+      session.user_id = null;
+      session.admin = null;
+      res.status(200).json({ message: "User logged out successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: error.message });
+    }
+  });
 
 
 
