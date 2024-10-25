@@ -260,6 +260,41 @@ app.get("/getItemById/:item_id", async (req, res) => {
     }
 });
 
+// ---------- Update Item By ID ----------
+app.post("/update_item/:item_id", async (req, res) => {
+    if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    const item_id = req.params.item_id;
+    try {
+        var data = {
+            name: req.body.name,
+            price: req.body.price,
+            size: req.body.size,
+            gender: req.body.gender,
+            description: req.body.description,
+            quantity: req.body.quantity,
+            imgSrc: req.body.imgSrc,
+            tags: req.body.tags,
+        };
+
+        const updatedFields = data;
+        const updatedItem = await Items.findByIdAndUpdate(item_id, updatedFields, {
+            new: true,
+        });
+
+        if (!updatedItem) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+        return res.status(200).json(updatedItem);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+
+
 
 
 

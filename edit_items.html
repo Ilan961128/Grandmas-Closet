@@ -142,15 +142,25 @@
     </div>
 
     <!-- update modal -->
-    <div id="itemUpdateModal" class="h-[100vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
+    <div id="itemUpdateModal" class="h-[160vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
         <div class="flex justify-center">
-            <div class="h-[80%] w-[40%] bg-[#131313] absolute mt-20 z-100 border-4 border-white">
+            <div class="h-[1100px] w-[40%] bg-[#131313] absolute mt-20 z-100 border-4 border-white">
                 <div class="flex justify-center">
                     <div>
-                        <h1 class="text-5xl font-bold py-8 flex justify-center text-white">Update User</h1>
+                        <h1 class="text-5xl font-bold py-8 flex justify-center text-white">Update Item</h1>
                     </div>
                 </div>
                 <div class="form-row flex flex-col w-[80%] mx-auto">
+
+                    <!-- Image -->
+                    <div class="form-group flex flex-col mb-3 mx-auto items-center">
+                        <label for="image" class="text-white">Image</label>
+                        <img src="" alt="item" id="itemImage" class="w-[100px] h-[100px] object-fit" />
+                        <div>
+                            <input type="file" id="image" name="image" class="ml-[230px] mt-2 border-2 border-[#131313] w-fit"
+                                required />
+                        </div>
+                    </div>
 
                     <!-- ID -->
                     <div class="form-group flex flex-col mb-3 ">
@@ -158,49 +168,55 @@
                         <input type="text" id="id" name="id" class="form-control border-2 border-[#131313]" disabled />
                     </div>
 
-                    <!-- First Name -->
+                    <!-- Name -->
                     <div class="form-group flex flex-col mb-3 ">
-                        <label for="firstName" class="text-white">First Name</label>
-                        <input type="text" id="firstName" name="firstName"
-                            class="form-control border-2 border-[#131313]" required />
-                    </div>
 
-                    <!-- Last Name -->
-                    <div class="form-group flex flex-col mb-3">
-
-                        <label for="lastName" class="text-white">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" class="form-control border-2 border-[#131313]"
+                        <label for="name" class="text-white">Name</label>
+                        <input type="text" id="name" name="name" class="form-control border-2 border-[#131313]"
                             required />
                     </div>
 
-                    <!-- Password -->
+                    <!-- Price -->
                     <div class="form-group flex flex-col mb-3">
-
-                        <label for="password" class="text-white">Password
-                        </label>
-                        <input type="text" id="password" name="password" class="form-control border-2 border-[#131313]"
+                        <label for="price" class="text-white">Price</label>
+                        <input type="text" id="price" name="price" class="form-control border-2 border-[#131313]"
                             required />
                     </div>
 
-                    <!-- Secret Phrase for Password Reset -->
-                    <div class="form-group flex flex-col mb-3">
+                    <!-- Size -->
 
-                        <label for="secretPhrase" class="text-white">Secret Phrase</label>
-                        <input type="text" id="secretPhrase" name="secretPhrase"
-                            class="form-control border-2 border-[#131313]" required />
-                    </div>
-
-                    <!-- Email -->
                     <div class="form-group flex flex-col mb-3">
-                        <label for="email" class="text-white">Email</label>
-                        <input type="email" id="email" name="email" class="form-control border-2 border-[#131313]"
+                        <label for="size" class="text-white">Size</label>
+                        <input type="text" id="size" name="size" class="form-control border-2 border-[#131313]"
                             required />
                     </div>
 
-                    <!-- Admin status -->
+                    <!-- Gender -->
                     <div class="form-group flex flex-col mb-3">
-                        <label for="admin" class="text-white">Admin Status</label>
-                        <input type="text" id="admin" name="admin" class="form-control border-2 border-[#131313]"
+                        <label for="gender" class="text-white">Gender</label>
+                        <input type="text" id="gender" name="gender" class="form-control border-2 border-[#131313]"
+                            required />
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group flex flex-col mb-3">
+                        <label for="description" class="text-white">Description</label>
+                        <textarea type="text" id="description" name="description"
+                            class="form-control border-2 border-[#131313]" required>
+                        </textarea>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="form-group flex flex-col mb-3">
+                        <label for="quantity" class="text-white">Quantity</label>
+                        <input type="text" id="quantity" name="quantity" class="form-control border-2 border-[#131313]"
+                            required />
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="form-group flex flex-col mb-3">
+                        <label for="tags" class="text-white">Tags</label>
+                        <input type="text" id="tags" name="tags" class="form-control border-2 border-[#131313]"
                             required />
                     </div>
 
@@ -218,7 +234,7 @@
     </div>
 
     <!-- delete modal -->
-    <div id="userDeleteModal" class="h-[100vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
+    <div id="itemUpdateModal" class="h-[100vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
         <div class="flex justify-center">
             <div class="h-[40%] w-[40%] bg-[#131313] absolute mt-20 z-100 border-4 border-white">
                 <div class="flex justify-center">
@@ -288,18 +304,18 @@
 
 
     window.deleteItem = function (itemId) {
-        document.getElementById("userDeleteModal").style.display = "inline";
+        document.getElementById("itemUpdateModal").style.display = "inline";
 
         $('#deleteChangesBtn').off('click').on('click', function () {
             console.log(`Delete user with ID: ${itemId}`);
             $.post(`http://localhost:5500/delete_user/${itemId}`, function (data) {
                 fetchItems();
-                document.getElementById("userDeleteModal").style.display = "none";
+                document.getElementById("itemUpdateModal").style.display = "none";
             });
         });
 
         $("#cancelChangesBtnDlt").off('click').on("click", function () {
-            document.getElementById("userDeleteModal").style.display = "none";
+            document.getElementById("itemUpdateModal").style.display = "none";
         });
 
     };
@@ -307,18 +323,21 @@
     window.updateItem = function (itemId) {
         $('#user_groups').data('itemId', itemId);
         console.log(`Update user with ID: ${itemId}`);
-        const itemToUpdate = users.find(user => user._id === itemId);
+        const itemToUpdate = items.find(item => item._id === itemId);
 
         console.log(itemToUpdate);
 
         document.getElementById("itemUpdateModal").style.display = "inline";
+        $("#itemImage").attr("src", itemToUpdate.imgSrc);
         $("#id").val(itemToUpdate._id);
-        $("#firstName").val(itemToUpdate.first_name);
-        $("#lastName").val(itemToUpdate.last_name);
-        $("#email").val(itemToUpdate.email);
-        $("#secretPhrase").val(itemToUpdate.secret_phrase);
-        $("#password").val(itemToUpdate.password);
-        $("#admin").val(itemToUpdate.admin);
+        $("#name").val(itemToUpdate.name);
+        $("#price").val(itemToUpdate.price);
+        $("#size").val(itemToUpdate.size);
+        $("#gender").val(itemToUpdate.size);
+        $("#description").val(itemToUpdate.description);
+        $("#quantity").val(itemToUpdate.quantity);
+        $("#tags").val(itemToUpdate.tags);
+
 
         $("#saveChangesBtn").off('click').on("click", function () {
             const updatedItem = {
@@ -334,7 +353,7 @@
 
             console.log(updatedItem);
 
-            fetch(`http://localhost:5500/update_user/${itemId}`, {
+            fetch(`http://localhost:5500/update_item/${itemId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
