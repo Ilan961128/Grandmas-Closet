@@ -104,8 +104,33 @@ app.get("/SetSessionID/:user_id", async (req, res) => {
             console.log("Admin User");
         }
 
-        createLog("Signin", "", req);
         res.status(200).json({ the_user_id });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// ---------- Get User By ID ----------
+app.get("/user_details", async (req, res) => {
+    if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const users = await Users.findById(session.user_id);
+        // console.log(users)
+        res.status(200).json({ users });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// ---------- Get User By Email - Sign In ----------
+app.get("/getUserByMail/:email", async (req, res) => {
+    try {
+        //make the email with all lower case
+        const email = (req.params.email).toLocaleLowerCase();
+        const users = await Users.findOne({ email: email });
+        res.status(200).json({ users });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.message });
