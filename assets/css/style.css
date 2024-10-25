@@ -70,7 +70,7 @@ body {
     padding-left: 100px;
     padding-right: 100px;
     padding-top: 60px;
-    padding-bottom: 60px;
+    padding-bottom: 80px;
 
 }
 
@@ -208,11 +208,24 @@ body {
 .footer {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100px;
     background-color: #131313;
-    margin-top: 150px;
+    padding: 20px;
     color: white;
     font-size: 20px;
+    font-weight: bold;
+}
+
+.promote{
+    display: flex;
+    justify-content: center;
+    flex-direction: column ;
+    align-items: center;
+    height: 800px;
+    background-image: url('../images/bliss-bg.jpg');
+    background-size: cover;
+    color: #131313;
+    font-size: 50px;
     font-weight: bold;
 }
