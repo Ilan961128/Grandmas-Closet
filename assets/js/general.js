@@ -205,6 +205,7 @@ const itemData = [
 
 // Initialize the cart by checking for existing data in localStorage
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let itemsToShow = 8; // Start by showing 4 items
 
 function getFourItemsByCategory(category) {
     console.log(category);
@@ -299,16 +300,27 @@ function filterItems(category, gender) {
     renderItems(filteredItems);
 }
 
+let currentData = itemData;
+
+function loadMoreItems() {
+    itemsToShow += 2
+    renderItems(currentData);
+}
+
+
 function getAllItems() {
+    currentData = itemData;
     renderItems(itemData);
 }
 
 function renderItems(items) {
-    const mightLikeContainer = document.getElementById("items-container"); // Ensure this element exists
+
+    const loadMoreContainer = document.getElementById("loadmore");
+    const mightLikeContainer = document.getElementById("items-container");
     mightLikeContainer.innerHTML = ""; // Clear previous content
 
-    // Iterate through items and group them in sets of 4
-    for (let i = 0; i < items.length; i += 4) {
+    // Iterate through items and limit the display based on itemsToShow
+    for (let i = 0; i < Math.min(items.length, itemsToShow); i += 4) {
         const wrapperDiv = document.createElement('div');
         wrapperDiv.className = "flex";
         const cardboxDiv = document.createElement('div');
@@ -330,11 +342,17 @@ function renderItems(items) {
             cardboxDiv.appendChild(itemDiv); // Append the card to the cardbox
         }
         wrapperDiv.appendChild(cardboxDiv); // Append the cardbox to the wrapper
-
         mightLikeContainer.appendChild(wrapperDiv); // Append the cardbox to the main container
+
+        if (items.length > itemsToShow) {
+            loadMoreContainer.style.display = "block";
+        } else {
+            loadMoreContainer.style.display = "none";
+        }
+
+        currentData = items;
     }
 }
-
 // Function to add item to cart based on item ID
 function addToCart(itemId) {
     // Find the item in itemData based on the ID
