@@ -78,7 +78,7 @@ app.get("/check_email/:email", async (req, res) => {
 const mongoUserName = process.env.MONGO_USER_NAME;
 const mongoPassword = process.env.MONGO_PASSWORD;
 
-const port = 3000
+const port = 5500
 
 mongoose
     .connect(
