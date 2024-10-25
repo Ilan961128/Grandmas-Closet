@@ -143,6 +143,16 @@ body {
 
 }
 
+.thebutton-white {
+    color: #131313;
+    background-color: white;
+    width: fit-content;
+    padding: 10px;
+    font-size: 22px;
+    margin-top: 30px;
+    border: 3px solid #13131300;
+}
+
 .thebutton:hover {
     background-color: white;
     color: #131313;
@@ -219,10 +229,10 @@ body {
     font-weight: bold;
 }
 
-.promote{
+.promote {
     display: flex;
     justify-content: center;
-    flex-direction: column ;
+    flex-direction: column;
     align-items: center;
     height: 800px;
     background-image: url('../images/bliss-bg.jpg');
@@ -243,7 +253,7 @@ body {
 
 /* shop */
 
-.shop-container{
+.shop-container {
     display: flex;
     /* justify-content: center; */
     /* align-items: center; */
@@ -251,7 +261,7 @@ body {
     margin-top: 20px;
 }
 
-.shop-filter{
+.shop-filter {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -259,7 +269,7 @@ body {
     width: 400px;
 }
 
-.shop-cards{
+.shop-cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -267,26 +277,26 @@ body {
     margin-top: 20px;
 }
 
-.accordion-item{
+.accordion-item {
     gap: 20px;
     cursor: pointer;
     border-radius: 0px;
-    border: 1px solid #131313; 
+    border: 1px solid #131313;
 }
 
-.accordion{
+.accordion {
     border-radius: 0px;
-    
+
 }
 
-.accordion-header{
+.accordion-header {
     background-color: #131313;
     color: white;
     font-size: 20px;
     font-weight: bold;
 }
 
-.accordion-button{
+.accordion-button {
     background-color: #131313;
     color: white;
     font-size: 20px;
@@ -294,7 +304,7 @@ body {
 }
 
 
-.title-shop{
+.title-shop {
     font-size: 40px;
     color: #ae1d1d;
 }

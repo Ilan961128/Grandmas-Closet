@@ -62,7 +62,7 @@ app.use(bodyParser.json());
 // ---------- Check Session ----------
 app.get("/checkSession", async (req, res) => {
     if (session.admin === "master") {
-        return res.status(200).json({ message: "Admin"});
+        return res.status(200).json({ message: "Admin" });
     }
     if (session.user_id === null) {
         return res.status(401).json({ message: "Unauthorized" });
@@ -123,6 +123,18 @@ app.get("/SetSessionID/:user_id", async (req, res) => {
     }
 });
 
+// ---------- Get All Users ----------
+app.get("/getUsers", async (req, res) => {
+    if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const users = await Users.find({});
+        res.status(200).json({ users });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // ---------- Get User By ID ----------
 app.get("/user_details", async (req, res) => {
     if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
@@ -166,18 +178,62 @@ app.get("/check_email/:email", async (req, res) => {
     }
 });
 
+// ---------- Update User By ID ----------
+app.post("/update_user/:user_id", async (req, res) => {
+    if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    const user_id = req.params.user_id;
+    try {
+        var data = {
+            first_name: req.body.firstName,
+            last_name: req.body.lastName,
+            password: req.body.password,
+            email: req.body.email,
+            secret_phrase: req.body.secretPhrase,
+            admin: req.body.admin,
+        };
+
+        console.log(req.body);
+
+
+        const updatedFields = data;
+        console.log(updatedFields);
+
+        const updatedUser = await Users.findByIdAndUpdate(user_id, updatedFields, {
+            new: true,
+        });
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+
+
+
+
+
+
 // ---------- Sign out ---------
 app.get("/signout", async (req, res) => {
     if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
     try {
-      session.user_id = null;
-      session.admin = null;
-      res.status(200).json({ message: "User logged out successfully" });
+        session.user_id = null;
+        session.admin = null;
+        res.status(200).json({ message: "User logged out successfully" });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: error.message });
+        console.error(error);
+        res.status(500).json({ message: error.message });
     }
-  });
+});
+
+
 
 
 

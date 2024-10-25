@@ -418,6 +418,13 @@ function addToCart(itemId) {
                 // Save updated cart to localStorage
                 localStorage.setItem("cart", JSON.stringify(cart));
                 console.log("Item added to cart:", item);
+                let currentCartNum = document.getElementById("cartNum").innerText;
+                currentCartNum = currentCartNum.replace("(", "").replace(")", "");
+                console.log(currentCartNum);
+                currentCartNum = parseInt(currentCartNum);
+                currentCartNum += 1;
+                console.log(currentCartNum);
+                document.getElementById("cartNum").innerText = "(" + currentCartNum + ")";
             }
         })
         .catch(error => {
