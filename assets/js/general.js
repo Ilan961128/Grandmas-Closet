@@ -199,8 +199,25 @@ function renderMightLikeItems(category, boxNumber) {
     );
 }
 
-function renderAllItems() {
-    let items = itemData;
+function filterItems(category, gender) {
+    const itemsContainer = document.getElementById("items-container");
+    itemsContainer.innerHTML = ""; // Clear previous content
+
+    // Filter items based on selected category and gender
+    const filteredItems = itemData.filter(item => 
+        item.tags.includes(category) && (item.gender === gender || item.gender === 'Unisex')
+    );
+
+    // Render the filtered items
+    console.log(filteredItems);
+    renderItems(filteredItems);
+}
+
+function getAllItems() {
+    renderItems(itemData);
+}
+
+function renderItems(items) {
     const mightLikeContainer = document.getElementById("items-container"); // Ensure this element exists
     mightLikeContainer.innerHTML = ""; // Clear previous content
 
