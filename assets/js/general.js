@@ -288,7 +288,7 @@ function renderMightLikeItems(category, boxNumber) {
     items.forEach(item => {
         const itemDiv = document.createElement('div');
         itemDiv.innerHTML = `
-        <div class="card">
+        <div class="card" onClick="location.href='item.html?id=${item.id}'">
                 <img src="${item.imgSrc}" alt="${item.name}" class="card-img">
                 <div class="card-info">
                     <span class="card-title">${item.name}</span>

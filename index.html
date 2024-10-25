@@ -44,11 +44,12 @@
                 <a id="signOutLink" onclick="signout()" style="text-decoration: none; color: #131313; display: none;">
                     <span class="header-link">Sign Out</span>
                 </a>
-                <a href="/control_panel.html" id="controlPanelLink" style="text-decoration: none; color: #131313; display: none;">
+                <a href="/control_panel.html" id="controlPanelLink"
+                    style="text-decoration: none; color: #131313; display: none;">
                     <span class="header-link">Admin Panel</span>
                 </a>
             </div>
-            <div>
+            <div id="icons-container">
                 <i class="fas fa-search"></i>
                 <a href="cart.html" style="text-decoration: none; color: #131313">
                     <i class="fas fa-shopping-cart"></i> <span id="cartNum"></span>
@@ -162,10 +163,13 @@
                     document.getElementById("signUpLink").style.display = "none";
                     document.getElementById("signInLink").style.display = "none";
                     document.getElementById("signOutLink").style.display = "inline";
+                    document.getElementById("icons-container").style.display = "inline";
+
                 } else if (data.message === "Unauthorized") {
                     document.getElementById("signUpLink").style.display = "inline";
                     document.getElementById("signInLink").style.display = "inline";
                     document.getElementById("signOutLink").style.display = "none";
+                    document.getElementById("icons-container").style.display = "none";
                 }
                 else if (data.message === "Admin") {
                     document.getElementById("signUpLink").style.display = "none";
