@@ -331,7 +331,7 @@ function renderItems(items) {
             const item = items[j];
             const itemDiv = document.createElement('div');
             itemDiv.innerHTML = `
-            <div class="card">
+            <div class="card" onClick="location.href='item.html?id=${item.id}'">
                 <img src="${item.imgSrc}" alt="${item.name}" class="card-img">
                 <div class="card-info">
                     <span class="card-title">${item.name}</span>
@@ -353,6 +353,23 @@ function renderItems(items) {
         currentData = items;
     }
 }
+
+// Function to get an item by ID
+function getItemById(id) {
+    return itemData.find(item => item.id === parseInt(id));
+}
+
+// Function to display item details on the page
+function displayItem() {
+
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get('id');
+    const item = getItemById(itemId);
+
+    showItem(item);
+}
+
+
 // Function to add item to cart based on item ID
 function addToCart(itemId) {
     // Find the item in itemData based on the ID
@@ -457,3 +474,7 @@ function displayCart() {
     table.appendChild(body);
     cartContainer.appendChild(table);
 }
+
+
+
+
