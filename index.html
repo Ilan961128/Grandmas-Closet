@@ -13,33 +13,6 @@
 
 </head>
 <script>
-    // Define itemData array to store product details
-    const itemData = [
-        {
-            id: 1,
-            name: 'VINTAGE LOS ANGELES LAKERS SWEATER',
-            price: 150,
-            size: 'M',
-            gender: 'Unisex',
-            description: 'A classic Lakers sweater, perfect for vintage sportswear fans.',
-            quantity: 1,
-            imgSrc: 'assets/images/LA_SWEATER.png',
-            tags: ['men', 'women', 'unisex', 'sweather']
-        },
-        {
-            id: 2,
-            name: 'VINTAGE NIKE WINDBREAKER',
-            price: 202,
-            size: 'L',
-            gender: 'Unisex',
-            description: 'A classic Nike windbreaker, perfect for vintage sportswear fans.',
-            quantity: 1,
-            imgSrc: 'assets/images/VINTAGE_NIKE_WINDBREAKER.png',
-            tags: ['men', 'women', 'unisex', 'sweather']
-        }
-
-        // Add more items here as needed
-    ];
 
 </script>
 
@@ -79,7 +52,7 @@
     <!-- hero -->
     <div id="item-container">
         <!-- <div>
-            <img src="assets/images/LA_SWEATER.png" alt="LA SWEATHER" class="item-img">
+            <img src="assets/images/sweater/LA_SWEATER.png" alt="LA SWEATHER" class="item-img">
         </div>
         <div class="item-info">
             <div>
@@ -126,71 +99,47 @@
                 YOU MIGHT LIKE...
             </span>
         </div>
-        <div class="cardbox">
-            <div class="card">
-                <img src="assets/images/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
+        <div class="cardbox" id="cardbox1">
+
         </div>
         <div>
             <span class="glance-title">
                 AND ALSO THIS!
             </span>
         </div>
-        <div class="cardbox">
-            <div class="card">
-                <img src="assets/images/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
+        <div class="cardbox" id="cardbox2">
+
         </div>
+        <!-- <div class="cardbox">
+            <div class="card">
+                <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
+                <div class="card-info">
+                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
+                    <span class="card-price">150₪</span>
+                </div>
+            </div>
+            <div class="card">
+                <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
+                <div class="card-info">
+                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
+                    <span class="card-price">150₪</span>
+                </div>
+            </div>
+            <div class="card">
+                <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
+                <div class="card-info">
+                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
+                    <span class="card-price">150₪</span>
+                </div>
+            </div>
+            <div class="card">
+                <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
+                <div class="card-info">
+                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
+                    <span class="card-price">150₪</span>
+                </div>
+            </div>
+        </div> -->
     </div>
 
     <!-- divider -->
@@ -252,5 +201,8 @@
     window.onload = function () {
         // Show the first item on page load
         showItem(itemData[0]);
+        renderMightLikeItems("sweater", 1);
+        renderMightLikeItems("shirts", 2);
+
     };
 </script>

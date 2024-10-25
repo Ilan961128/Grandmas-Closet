@@ -1,5 +1,128 @@
+// Define itemData array to store product details
+const itemData = [
+    {
+        id: 1,
+        name: 'VINTAGE LOS ANGELES LAKERS SWEATER',
+        price: 150,
+        size: 'M',
+        gender: 'Unisex',
+        description: 'A classic Lakers sweater, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/sweater/LA_SWEATER.png',
+        tags: ['men', 'women', 'unisex', 'sweater']
+    },
+    {
+        id: 2,
+        name: 'VINTAGE NIKE WINDBREAKER',
+        price: 202,
+        size: 'L',
+        gender: 'Unisex',
+        description: 'A classic Nike windbreaker, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png',
+        tags: ['men', 'women', 'unisex', 'sweater']
+    },
+    {
+        id: 3,
+        name: 'VINTAGE LOONEY TOONS SWEATER',
+        price: 214,
+        size: 'XL',
+        gender: 'Unisex',
+        description: 'A classic Looney Toons sweater, perfect for vintage cartoon fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/sweater/VINTAGE LOONEY TOONS SWEATER.png',
+        tags: ['men', 'women', 'unisex', 'sweater']
+    },
+    {
+        id: 4,
+        name: 'VINTAGE NIKE WASHINGTON STATE ZIP SWEATER',
+        price: 227,
+        size: 'XL',
+        gender: 'Unisex',
+        description: 'A classic Nike Washington State sweater, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/sweater/VINTAGE NIKE WASHINGTON STATE  ZIP SWEATER.png',
+        tags: ['men', 'women', 'unisex', 'sweater']
+    },
+    {
+        id: 5,
+        name: 'VINTAGE NIKE SWEATER',
+        price: 180,
+        size: 'XL',
+        gender: 'Unisex',
+        description: 'A classic Nike sweater, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/sweater/VINTAGE NIKE SWEATER.png',
+        tags: ['men', 'women', 'unisex', 'sweater']
+    },
+    {
+        id: 6,
+        name: 'VINTAGE NIKE JERSEY',
+        price: 150,
+        size: 'XXL',
+        gender: 'Unisex',
+        description: 'A classic Nike jersey, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/shirts/VINTAGE NIKE JERSEY.png',
+        tags: ['men', 'women', 'unisex', 'shirts']
+    },
+    {
+        id: 7,
+        name: 'VINTAGE NIKE T-SHIRT',
+        price: 120,
+        size: 'XXL',
+        gender: 'Unisex',
+        description: 'A classic Nike t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/shirts/VINTAGE NIKE T-SHIRT.png',
+        tags: ['men', 'women', 'unisex', 'shirts']
+    },
+    {
+        id: 8,
+        name: 'VINTAGE REEBOK SAN ANTONIO SPURS 2003 T-SHIRT',
+        price: 160,
+        size: 'L',
+        gender: 'Unisex',
+        description: 'A classic Reebok San Antonio Spurs 2003 t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/shirts/VINTAGE REEBOK SAN ANTONIO SPURS 2003 T-SHIRT.png',
+        tags: ['men', 'women', 'unisex', 'shirts']
+    },
+    {
+        id: 9,
+        name: 'VINTAGE NIKE T-SHIRT STRIPES',
+        price: 140,
+        size: 'S',
+        gender: 'Unisex',
+        description: 'A classic Nike t-shirt with stripes, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/shirts/VINTAGE NIKE T-SHIRT STRIPES.png',
+        tags: ['men', 'women', 'unisex', 'shirts']
+    },
+    {
+        id: 10,
+        name: 'VINTAGE NIKE BASEBALL T-SHIRT',
+        price: 100,
+        size: 'S',
+        gender: 'Unisex',
+        description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/shirts/VINTAGE NIKE BASEBALL T-SHIRT.png',
+        tags: ['men', 'women', 'unisex', 'shirts']
+    },
+];
+
+
+
+
 // Initialize the cart by checking for existing data in localStorage
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function getFourItemsByCategory(category) {
+    console.log(category);
+    return itemData.filter(item => item.tags.includes(category)).slice(0, 4);
+}
+
 
 function showItem(item) {
     console.log(item);
@@ -45,6 +168,35 @@ function showItem(item) {
 
     itemContainer.appendChild(itemDiv);
 
+}
+
+function renderMightLikeItems(category, boxNumber) {
+    let mightLikeContainer = document.getElementById("cardbox1");
+    if (boxNumber === 1) {
+        mightLikeContainer = document.getElementById("cardbox1");
+    }
+    else if (boxNumber === 2) {
+        mightLikeContainer = document.getElementById("cardbox2");
+    }
+    mightLikeContainer.innerHTML = ""; // Clear previous content
+
+    const items = getFourItemsByCategory(category);
+    console.log(items);
+
+    items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.innerHTML = `
+        <div class="card">
+                <img src="${item.imgSrc}" alt="${item.name}" class="card-img">
+                <div class="card-info">
+                    <span class="card-title">${item.name}</span>
+                    <span class="card-price">${item.price}₪</span>
+                </div>
+            </div>
+        `
+        mightLikeContainer.appendChild(itemDiv);
+    }
+    );
 }
 
 // Function to add item to cart based on item ID
