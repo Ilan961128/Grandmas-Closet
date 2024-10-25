@@ -110,6 +110,94 @@ const itemData = [
         imgSrc: 'assets/images/shirts/VINTAGE NIKE BASEBALL T-SHIRT.png',
         tags: ['men', 'women', 'unisex', 'shirts']
     },
+    {
+        id: 11,
+        name: 'VINTAGE STUSSY HAT',
+        price: 60,
+        size: 'OS',
+        gender: 'Unisex',
+        description: 'A classic Stussy hat, perfect for vintage streetwear.',
+        quantity: 1,
+        imgSrc: 'assets/images/hats/VINTAGE STUSSY HAT.png',
+        tags: ['men', 'women', 'unisex', 'hats']
+    },
+    {
+        id: 12,
+        name: 'VINTAGE CAMO HAT',
+        price: 60,
+        size: 'OS',
+        gender: 'Unisex',
+        description: 'A classic camo hat, perfect for vintage streetwear.',
+        quantity: 1,
+        imgSrc: 'assets/images/hats/VINTAGE CAMO HAT.png',
+        tags: ['men', 'women', 'unisex', 'hats']
+    },
+    {
+        id: 13,
+        name: 'VINTAGE JOHN DEERE HAT',
+        price: 60,
+        size: 'OS',
+        gender: 'Unisex',
+        description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/hats/VINTAGE JOHN DEERE HAT.png',
+        tags: ['men', 'women', 'unisex', 'hats']
+    },
+    {
+        id: 14,
+        name: 'VINTAGE TAYLOR MADE GOLF HAT',
+        price: 60,
+        size: 'OS',
+        gender: 'Unisex',
+        description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/hats/VINTAGE TAYLOR MADE GOLF HAT.png',
+        tags: ['men', 'women', 'unisex', 'hats']
+    },
+    {
+        id: 15,
+        name: 'VINTAGE NIKE HAT',
+        price: 60,
+        size: 'OS',
+        gender: 'Unisex',
+        description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/hats/VINTAGE NIKE HAT.png',
+        tags: ['men', 'women', 'unisex', 'hats']
+    },
+    {
+        id: 16,
+        name: 'VINTAGE NIKE HAT BLUE',
+        price: 60,
+        size: 'OS',
+        gender: 'Unisex',
+        description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/hats/VINTAGE NIKE HAT BLUE.png',
+        tags: ['men', 'women', 'unisex', 'hats']
+    },
+    {
+        id: 17,
+        name: 'VINTAGE THE NORTH FACE HAT',
+        price: 60,
+        size: 'OS',
+        gender: 'Unisex',
+        description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/hats/VINTAGE THE NORTH FACE HAT.png',
+        tags: ['men', 'women', 'unisex', 'hats']
+    },
+    {
+        id: 18,
+        name: 'VINTAGE ADIDAS HAT',
+        price: 60,
+        size: 'OS',
+        gender: 'Unisex',
+        description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
+        quantity: 1,
+        imgSrc: 'assets/images/hats/VINTAGE ADIDAS HAT.png',
+        tags: ['men', 'women', 'unisex', 'hats']
+    },
 ];
 
 
