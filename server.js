@@ -5,6 +5,7 @@ const app = express();
 const crypto = require("crypto");
 const mongoose = require("mongoose");
 const Users = require("./models/users");
+const Items = require("./models/items");
 var session = require("express-session");
 
 // ---------- Session ----------
@@ -233,6 +234,31 @@ app.post("/update_user/:user_id", async (req, res) => {
 });
 
 
+
+// ---------- Get All Items ----------
+app.get("/getItems", async (req, res) => {
+    // if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const items = await Items.find({});
+        res.status(200).json({ items });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// ---------- Get Item By ID ----------
+app.get("/getItemById/:item_id", async (req, res) => {
+    // if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const item_id = req.params.item_id;
+        const item = await Items.findById(item_id);
+        res.status(200).json({ item });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
 
 
 
