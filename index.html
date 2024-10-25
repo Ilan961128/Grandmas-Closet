@@ -10,11 +10,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
-<script>
-
-</script>
 
 <body>
 
@@ -39,13 +35,13 @@
                 <a href="/index.html" style="text-decoration: none; color: #131313">
                     <span class="header-link">About</span>
                 </a>
-                <a href="/signup.html" style="text-decoration: none; color: #131313">
+                <a href="/signup.html" id="signUpLink" style="text-decoration: none; color: #131313; display: none;">
                     <span class="header-link">Sign Up</span>
                 </a>
-                <a href="/signin.html" style="text-decoration: none; color: #131313">
+                <a href="/signin.html" id="signInLink" style="text-decoration: none; color: #131313; display: none;">
                     <span class="header-link">Sign In</span>
                 </a>
-                <a onclick="signout()" style="text-decoration: none; color: #131313">
+                <a id="signOutLink" onclick="signout()" style="text-decoration: none; color: #131313; display: none;">
                     <span class="header-link">Sign Out</span>
                 </a>
             </div>
@@ -60,42 +56,7 @@
 
     <!-- hero -->
     <div id="item-container">
-        <!-- <div>
-            <img src="assets/images/sweater/LA_SWEATER.png" alt="LA SWEATHER" class="item-img">
-        </div>
-        <div class="item-info">
-            <div>
-                <span class="item-title">VINTAGE LOS ANGELES LAKERS SWEATER</span>
-            </div>
-            <div class="diverderr">
-
-            </div>
-            <div>
-                <span class="item-price">150₪</span>
-            </div>
-            <div class="item-stats">
-                <div>
-                    <span style="font-weight: bold;">Size:</span>
-                    <span>M</span>
-                </div>
-                <div>
-                    <span style="font-weight: bold;">Gender: </span>
-                    <span>Unisex</span>
-                </div>
-            </div>
-            <div>
-                <span class="item-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis sunt, unde,
-                    impedit iure dignissimos doloribus cum consectetur nisi rerum incidunt perferendis voluptatibus
-                    maxime obcaecati corrupti id ipsam est, fugiat eos.</span>
-            </div>
-            <div class="thebutton" onclick="addToCart(1)">
-                Add to Cart
-            </div>
-
-        </div> -->
     </div>
-
-
 
     <!-- divider -->
     <div class="divider"></div>
@@ -119,36 +80,6 @@
         <div class="cardbox" id="cardbox2">
 
         </div>
-        <!-- <div class="cardbox">
-            <div class="card">
-                <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
-                <div class="card-info">
-                    <span class="card-title">VINTAGE CHICAGO BULLS SWEATER</span>
-                    <span class="card-price">150₪</span>
-                </div>
-            </div>
-        </div> -->
     </div>
 
     <!-- divider -->
@@ -208,10 +139,31 @@
 <script src="./assets/js/general.js"></script>
 <script>
     window.onload = function () {
-        // Show the first item on page load
+        // Check session status on load
+        checkSession();
+
+        // Render initial items
         showItem(itemData[0]);
         renderMightLikeItems("sweater", 1);
         renderMightLikeItems("shirts", 2);
-
     };
+
+    function checkSession() {
+        fetch("http://localhost:5500/checkSession")
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.message === "Authorized") {
+                    document.getElementById("signUpLink").style.display = "none";
+                    document.getElementById("signInLink").style.display = "none";
+                    document.getElementById("signOutLink").style.display = "inline";
+                } else if (data.message === "Unauthorized") {
+                    document.getElementById("signUpLink").style.display = "inline";
+                    document.getElementById("signInLink").style.display = "inline";
+                    document.getElementById("signOutLink").style.display = "none";
+                }
+            })
+            .catch(error => console.error("Error checking session:", error));
+    }
+
 </script>
