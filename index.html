@@ -23,9 +23,21 @@
             gender: 'Unisex',
             description: 'A classic Lakers sweater, perfect for vintage sportswear fans.',
             quantity: 1,
-            imgSrc: 'assets/images/LA_SWEATER.png'
+            imgSrc: 'assets/images/LA_SWEATER.png',
+            tags: ['men', 'women', 'unisex', 'sweather']
         },
-        
+        {
+            id: 2,
+            name: 'VINTAGE NIKE WINDBREAKER',
+            price: 202,
+            size: 'L',
+            gender: 'Unisex',
+            description: 'A classic Nike windbreaker, perfect for vintage sportswear fans.',
+            quantity: 1,
+            imgSrc: 'assets/images/VINTAGE_NIKE_WINDBREAKER.png',
+            tags: ['men', 'women', 'unisex', 'sweather']
+        }
+
         // Add more items here as needed
     ];
 
@@ -65,8 +77,8 @@
     </div>
 
     <!-- hero -->
-    <div class="item-container">
-        <div>
+    <div id="item-container">
+        <!-- <div>
             <img src="assets/images/LA_SWEATER.png" alt="LA SWEATHER" class="item-img">
         </div>
         <div class="item-info">
@@ -94,12 +106,14 @@
                     impedit iure dignissimos doloribus cum consectetur nisi rerum incidunt perferendis voluptatibus
                     maxime obcaecati corrupti id ipsam est, fugiat eos.</span>
             </div>
-            <div class="add-to-cart" onclick="addToCart(1)">
+            <div class="thebutton" onclick="addToCart(1)">
                 Add to Cart
             </div>
 
-        </div>
+        </div> -->
     </div>
+
+
 
     <!-- divider -->
     <div class="divider"></div>
@@ -192,7 +206,7 @@
             <div>
                 <span class="promote-desc">Buy a Sweatshirt ASAP!</span>
             </div>
-            <div class="add-to-cart" style="font-size: 30px;">
+            <div class="thebutton" style="font-size: 30px;">
                 TO THE SHOP
             </div>
         </div>
@@ -234,3 +248,9 @@
 </html>
 
 <script src="./assets/js/general.js"></script>
+<script>
+    window.onload = function () {
+        // Show the first item on page load
+        showItem(itemData[0]);
+    };
+</script>

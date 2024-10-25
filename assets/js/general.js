@@ -1,6 +1,52 @@
 // Initialize the cart by checking for existing data in localStorage
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+function showItem(item) {
+    console.log(item);
+    const itemContainer = document.getElementById("item-container");
+    itemContainer.innerHTML = ""; // Clear previous content
+
+    const itemDiv = document.createElement('div');
+
+    itemDiv.innerHTML = `
+    <div class="item-container">
+        <div>
+            <img src="${item.imgSrc}" alt="${item.name}" class="item-img">
+        </div>
+        <div class="item-info">
+            <div>
+                <span class="item-title">${item.name}</span>
+            </div>
+            <div class="diverderr">
+
+            </div>
+            <div>
+                <span class="item-price">${item.price}₪</span>
+            </div>
+            <div class="item-stats">
+                <div>
+                    <span style="font-weight: bold;">Size:</span>
+                    <span>${item.size}</span>
+                </div>
+                <div>
+                    <span style="font-weight: bold;">Gender: </span>
+                    <span>${item.gender}</span>
+                </div>
+            </div>
+            <div>
+                <span class="item-desc">${item.description}</span>
+            </div>
+            <div class="thebutton" onclick="addToCart(${item.id})">
+                Add to Cart
+            </div>
+        </div>
+    </div>
+    `;
+
+    itemContainer.appendChild(itemDiv);
+
+}
+
 // Function to add item to cart based on item ID
 function addToCart(itemId) {
     // Find the item in itemData based on the ID
