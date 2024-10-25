@@ -326,6 +326,11 @@ function getAllItems() {
     renderItems(itemData);
 }
 
+function howManyItemsInCart() {
+    const cartItems = getCartItems();
+    return cartItems.length;
+}
+
 function renderItems(items) {
 
     const loadMoreContainer = document.getElementById("loadmore");

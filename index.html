@@ -51,7 +51,7 @@
             <div>
                 <i class="fas fa-search"></i>
                 <a href="cart.html" style="text-decoration: none; color: #131313">
-                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fas fa-shopping-cart"></i> <span id="cartNum"></span>
                 </a>
             </div>
         </div>
@@ -144,6 +144,8 @@
     window.onload = function () {
         // Check session status on load
         checkSession();
+        let carNumbers = howManyItemsInCart();
+        document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
 
         // Render initial items
         showItem(itemData[0]);
