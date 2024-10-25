@@ -62,52 +62,22 @@
         <div class="flex justify-center py-16 text-bold text-5xl">
             YOUR CART
         </div>
-        <div id="cart-items"></div>
+        <div id="cart-container"></div>
     </div>
 
     <!-- Back to Shop Button if Cart is Empty -->
     <div class="mx-40 flex justify-center" id="empty-cart-message" style="display: none;">
-        <div class=" mx-40 flex justify-center text-[60px] w-fit mx-auto  text-white p-5 bg-[#131313] " onclick="location.href='/shop.html'">
+        <div class=" mx-40 flex justify-center text-[60px] w-fit mx-auto  text-white p-5 bg-[#131313] "
+            onclick="location.href='/shop.html'">
             Nothing here. Go shopping!
         </div>
     </div>
 
     <!-- Script to Fetch and Display Cart Items -->
+
+    <!-- Script to Display Cart -->
     <script src="assets/js/general.js"></script>
-    <script>
-        // Function to display items in the cart or an empty message
-        function displayCart() {
-            const cartItemsContainer = document.getElementById("cart-items");
-            const emptyCartMessage = document.getElementById("empty-cart-message");
-            const cartItems = getCartItems(); // Function to fetch cart from localStorage
-
-            cartItemsContainer.innerHTML = ""; // Clear previous content
-
-            if (cartItems.length === 0) {
-                // Show empty cart message
-                emptyCartMessage.style.display = "block";
-            } else {
-                // Hide empty cart message
-                emptyCartMessage.style.display = "none";
-
-                // Display cart items
-                cartItems.forEach(item => {
-                    cartItemsContainer.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-info">
-                                <span class="cart-item-name">${item.name}</span>
-                                <span class="cart-item-size">Size: ${item.size}</span>
-                                <span class="cart-item-price">${item.quantity} x ${item.price}₪</span>
-                            </div>
-                            <button class="remove-button" onclick="removeFromCart(${item.id}, '${item.size}')">Remove</button>
-                        </div>`;
-                });
-            }
-        }
-
-        // Initialize display on page load
-        window.onload = displayCart;
-    </script>
+    <script> displayCart(); </script>
 </body>
 
 </html>
