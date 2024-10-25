@@ -199,6 +199,39 @@ function renderMightLikeItems(category, boxNumber) {
     );
 }
 
+function renderAllItems() {
+    let items = itemData;
+    const mightLikeContainer = document.getElementById("items-container"); // Ensure this element exists
+    mightLikeContainer.innerHTML = ""; // Clear previous content
+
+    // Iterate through items and group them in sets of 4
+    for (let i = 0; i < items.length; i += 4) {
+        const wrapperDiv = document.createElement('div');
+        wrapperDiv.className = "flex";
+        const cardboxDiv = document.createElement('div');
+        cardboxDiv.className = "cardbox"; // Create a new cardbox for every 4 items
+
+        // Create the cards for this set
+        for (let j = i; j < i + 4 && j < items.length; j++) {
+            const item = items[j];
+            const itemDiv = document.createElement('div');
+            itemDiv.innerHTML = `
+            <div class="card">
+                <img src="${item.imgSrc}" alt="${item.name}" class="card-img">
+                <div class="card-info">
+                    <span class="card-title">${item.name}</span>
+                    <span class="card-price">${item.price}₪</span>
+                </div>
+            </div>
+            `;
+            cardboxDiv.appendChild(itemDiv); // Append the card to the cardbox
+        }
+        wrapperDiv.appendChild(cardboxDiv); // Append the cardbox to the wrapper
+
+        mightLikeContainer.appendChild(wrapperDiv); // Append the cardbox to the main container
+    }
+}
+
 // Function to add item to cart based on item ID
 function addToCart(itemId) {
     // Find the item in itemData based on the ID

@@ -57,9 +57,9 @@
     </div>
 
     <!-- shop -->
-     <div class="flex justify-center py-16 text-bold text-5xl">
+    <div class="flex justify-center py-16 text-bold text-5xl">
         SHOP
-     </div>
+    </div>
     <div class="flex gap-20 justify-between px-32">
         <div class="flex flex-col justify-between">
             <div class="flex flex-col  gap-4">
@@ -98,7 +98,10 @@
         </div>
 
         <div class="flex flex-col">
-            <div class="flex ">
+            <div id="items-container">
+
+            </div>
+            <!-- <div class="flex ">
                 <div class="cardbox">
                     <div class="card">
                         <img src="assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png" alt="CHICAGO SWEATER" class="card-img">
@@ -163,7 +166,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
             <div>
                 <div class="flex justify-center thebutton mx-auto mb-20">
@@ -211,3 +214,9 @@
 </html>
 
 <script src="./assets/js/general.js"></script>
+<script>
+    window.onload = function () {
+        // Show the first item on page load
+        renderAllItems();
+    };
+</script>
