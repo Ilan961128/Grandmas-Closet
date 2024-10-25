@@ -12,6 +12,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
+<script>
+    // Define itemData array to store product details
+    const itemData = [
+        {
+            id: 1,
+            name: 'VINTAGE LOS ANGELES LAKERS SWEATER',
+            price: 150,
+            size: 'M',
+            gender: 'Unisex',
+            description: 'A classic Lakers sweater, perfect for vintage sportswear fans.',
+            quantity: 1
+        },
+        // Add more items here as needed
+    ];
+
+</script>
 
 <body>
 
@@ -74,9 +90,10 @@
                     impedit iure dignissimos doloribus cum consectetur nisi rerum incidunt perferendis voluptatibus
                     maxime obcaecati corrupti id ipsam est, fugiat eos.</span>
             </div>
-            <div class="add-to-cart">
+            <div class="add-to-cart" onclick="addToCart(1)">
                 Add to Cart
             </div>
+
         </div>
     </div>
 
