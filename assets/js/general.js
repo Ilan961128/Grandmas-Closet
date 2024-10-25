@@ -26,7 +26,6 @@ function addToCart(itemId) {
     localStorage.setItem("cart", JSON.stringify(cart));
 
     console.log("Item added to cart:", item);
-    alert(`${item.name} (Size: ${item.size}) added to your cart!`);
 }
 
 // Function to retrieve cart items from localStorage
