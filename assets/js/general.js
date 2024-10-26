@@ -618,7 +618,9 @@ async function checkCartItems(cartItems) {
         var totalDOMamount = parseInt(totalDOMamountSTR);
 
         if (totalSum !== totalDOMamount) {
-            alert("The total amount has changed. Please refresh the page and try again.");
+            alert("The total amount has changed. Your cart has been restarted.");
+            clearCart();
+            displayCart();
             return false;
         }
 
