@@ -72,34 +72,10 @@
     </div>
 
 
-    <!-- Cart Container -->
-    <div class="mx-40">
-        <div class="flex justify-center py-16 text-bold text-5xl">
-            YOUR CART
-        </div>
-        <!-- divider -->
-        <div class="divider"></div>
-        <div class="divider-reversed"></div>
-        <div id="cart-container"></div>
-    </div>
-
-
-    <div class="mx-40 flex justify-center" id="empty-cart-message" style="display: none;">
-        <div class=" mx-40 flex justify-center text-[60px] w-fit mx-auto  text-white p-5 bg-[#131313] "
-            onclick="location.href='/shop.html'">
-            Nothing here. Go shopping!
-        </div>
-    </div>
-
-    <!-- Total -->
-    <div class="mx-40 flex flex-col justify-center pt-16 text-bold text-3xl text-center">
-        <div>Total Amount:</div>
-        <div><span id="total"></span>₪</div>
-    </div>
-
-    <div class="mx-40 flex justify-center mb-16" id="checkout-button">
-        <div class="thebutton" onclick="validateCart()">
-            Checkout
+    <div>
+        <h1 class="text-5xl font-bold py-8 flex justify-center">Checkout</h1>
+        <div class="flex justify-center">
+            <h2>Thank you for shopping with us! Your order has been placed.</h2>
         </div>
     </div>
 
@@ -111,7 +87,7 @@
             let carNumbers = howManyItemsInCart();
             document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
         };
-    
+
         function checkSession() {
             fetch("http://localhost:5500/checkSession")
                 .then(response => response.json())
@@ -121,7 +97,7 @@
                         document.getElementById("signInLink").style.display = "none";
                         document.getElementById("signOutLink").style.display = "inline";
                         document.getElementById("icons-container").style.display = "inline";
-    
+
                     } else if (data.message === "Unauthorized") {
                         document.getElementById("signUpLink").style.display = "inline";
                         document.getElementById("signInLink").style.display = "inline";
@@ -137,7 +113,7 @@
                 })
                 .catch(error => console.error("Error checking session:", error));
         }
-    
+
     </script>
 </body>
 

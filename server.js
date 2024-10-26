@@ -6,6 +6,7 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const Users = require("./models/users");
 const Items = require("./models/items");
+const Orders = require("./models/orders");
 var session = require("express-session");
 
 // ---------- Session ----------
@@ -311,9 +312,84 @@ app.post("/delete_item/:item_id", async (req, res) => {
     }
 });
 
+// ---------- Create Order ----------
 
+app.post("/create_order", async (req, res) => {
+    try {
+        const { items, price, city, street, number, phone } = req.body;
 
+        // Validate input
+        if (!items || !items.length) {
+            return res.status(400).json({ error: "Items array cannot be empty." });
+        }
+        if (!price || !city || !street || !number || !phone) {
+            return res.status(400).json({ error: "Please provide all required fields." });
+        }
 
+        // Check that each item ID in the order exists in the Item collection
+        const itemDocs = await Item.find({ '_id': { $in: items } });
+        if (itemDocs.length !== items.length) {
+            return res.status(400).json({ error: "Some items in the order do not exist." });
+        }
+
+        // Create a new order
+        const newOrder = new Orders({
+            items,
+            first_name,
+            last_name,
+            price,
+            status: "pending",
+            city,
+            street,
+            number,
+            phone
+        });
+
+        // Save the order to the database
+        await newOrder.save();
+
+        // Populate the items for a full response
+        const populatedOrder = await newOrder.populate('items').execPopulate();
+
+        res.status(201).json({
+            message: "Order created successfully.",
+            order: populatedOrder
+        });
+    } catch (error) {
+        console.error("Error creating order:", error);
+        res.status(500).json({ error: "Failed to create order." });
+    }
+});
+
+app.post("/create_order", async (req, res) => {
+    try {
+        var data = {
+            items: req.body.items,
+            first_name: req.body.firstName,
+            last_name: req.body.lastName,
+            price: req.body.price,
+            status: 'Pending',
+            city: req.body.city,
+            street: req.body.street,
+            number: req.body.number,
+            phone: req.body.phone
+        };
+
+        var db = mongoose.connection;
+        db.collection("orders").insertOne(data, (err, collection) => {
+            if (err) {
+                throw err;
+            }
+            session.user_id = (collection.insertedId).toString();
+            console.log("User Created Successfully");
+        });
+
+        return res.redirect("http://127.0.0.1:5500/signin.html");
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
 
 
 

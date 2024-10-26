@@ -1,206 +1,3 @@
-// Define itemData array to store product details
-// const itemData = [
-//     {
-//         id: 1,
-//         name: 'VINTAGE LOS ANGELES LAKERS SWEATER',
-//         price: 150,
-//         size: 'M',
-//         gender: 'Unisex',
-//         description: 'A classic Lakers sweater, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/sweater/LA_SWEATER.png',
-//         tags: ['men', 'women', 'unisex', 'sweater']
-//     },
-//     {
-//         id: 2,
-//         name: 'VINTAGE NIKE WINDBREAKER',
-//         price: 202,
-//         size: 'L',
-//         gender: 'Unisex',
-//         description: 'A classic Nike windbreaker, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/sweater/VINTAGE_NIKE_WINDBREAKER.png',
-//         tags: ['men', 'women', 'unisex', 'sweater']
-//     },
-//     {
-//         id: 3,
-//         name: 'VINTAGE LOONEY TOONS SWEATER',
-//         price: 214,
-//         size: 'XL',
-//         gender: 'Unisex',
-//         description: 'A classic Looney Toons sweater, perfect for vintage cartoon fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/sweater/VINTAGE LOONEY TOONS SWEATER.png',
-//         tags: ['men', 'women', 'unisex', 'sweater']
-//     },
-//     {
-//         id: 4,
-//         name: 'VINTAGE NIKE WASHINGTON STATE ZIP SWEATER',
-//         price: 227,
-//         size: 'XL',
-//         gender: 'Unisex',
-//         description: 'A classic Nike Washington State sweater, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/sweater/VINTAGE NIKE WASHINGTON STATE  ZIP SWEATER.png',
-//         tags: ['men', 'women', 'unisex', 'sweater']
-//     },
-//     {
-//         id: 5,
-//         name: 'VINTAGE NIKE SWEATER',
-//         price: 180,
-//         size: 'XL',
-//         gender: 'Unisex',
-//         description: 'A classic Nike sweater, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/sweater/VINTAGE NIKE SWEATER.png',
-//         tags: ['men', 'women', 'unisex', 'sweater']
-//     },
-//     {
-//         id: 6,
-//         name: 'VINTAGE NIKE JERSEY',
-//         price: 150,
-//         size: 'XXL',
-//         gender: 'Unisex',
-//         description: 'A classic Nike jersey, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/shirts/VINTAGE NIKE JERSEY.png',
-//         tags: ['men', 'women', 'unisex', 'shirts']
-//     },
-//     {
-//         id: 7,
-//         name: 'VINTAGE NIKE T-SHIRT',
-//         price: 120,
-//         size: 'XXL',
-//         gender: 'Unisex',
-//         description: 'A classic Nike t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/shirts/VINTAGE NIKE T-SHIRT.png',
-//         tags: ['men', 'women', 'unisex', 'shirts']
-//     },
-//     {
-//         id: 8,
-//         name: 'VINTAGE REEBOK SAN ANTONIO SPURS 2003 T-SHIRT',
-//         price: 160,
-//         size: 'L',
-//         gender: 'Unisex',
-//         description: 'A classic Reebok San Antonio Spurs 2003 t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/shirts/VINTAGE REEBOK SAN ANTONIO SPURS 2003 T-SHIRT.png',
-//         tags: ['men', 'women', 'unisex', 'shirts']
-//     },
-//     {
-//         id: 9,
-//         name: 'VINTAGE NIKE T-SHIRT STRIPES',
-//         price: 140,
-//         size: 'S',
-//         gender: 'Unisex',
-//         description: 'A classic Nike t-shirt with stripes, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/shirts/VINTAGE NIKE T-SHIRT STRIPES.png',
-//         tags: ['men', 'women', 'unisex', 'shirts']
-//     },
-//     {
-//         id: 10,
-//         name: 'VINTAGE NIKE BASEBALL T-SHIRT',
-//         price: 100,
-//         size: 'S',
-//         gender: 'Unisex',
-//         description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/shirts/VINTAGE NIKE BASEBALL T-SHIRT.png',
-//         tags: ['men', 'women', 'unisex', 'shirts']
-//     },
-//     {
-//         id: 11,
-//         name: 'VINTAGE STUSSY HAT',
-//         price: 60,
-//         size: 'OS',
-//         gender: 'Unisex',
-//         description: 'A classic Stussy hat, perfect for vintage streetwear.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/hats/VINTAGE STUSSY HAT.png',
-//         tags: ['men', 'women', 'unisex', 'hats']
-//     },
-//     {
-//         id: 12,
-//         name: 'VINTAGE CAMO HAT',
-//         price: 60,
-//         size: 'OS',
-//         gender: 'Unisex',
-//         description: 'A classic camo hat, perfect for vintage streetwear.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/hats/VINTAGE CAMO HAT.png',
-//         tags: ['men', 'women', 'unisex', 'hats']
-//     },
-//     {
-//         id: 13,
-//         name: 'VINTAGE JOHN DEERE HAT',
-//         price: 60,
-//         size: 'OS',
-//         gender: 'Unisex',
-//         description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/hats/VINTAGE JOHN DEERE HAT.png',
-//         tags: ['men', 'women', 'unisex', 'hats']
-//     },
-//     {
-//         id: 14,
-//         name: 'VINTAGE TAYLOR MADE GOLF HAT',
-//         price: 60,
-//         size: 'OS',
-//         gender: 'Unisex',
-//         description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/hats/VINTAGE TAYLOR MADE GOLF HAT.png',
-//         tags: ['men', 'women', 'unisex', 'hats']
-//     },
-//     {
-//         id: 15,
-//         name: 'VINTAGE NIKE HAT',
-//         price: 60,
-//         size: 'OS',
-//         gender: 'Unisex',
-//         description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/hats/VINTAGE NIKE HAT.png',
-//         tags: ['men', 'women', 'unisex', 'hats']
-//     },
-//     {
-//         id: 16,
-//         name: 'VINTAGE NIKE HAT BLUE',
-//         price: 60,
-//         size: 'OS',
-//         gender: 'Unisex',
-//         description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/hats/VINTAGE NIKE HAT BLUE.png',
-//         tags: ['men', 'women', 'unisex', 'hats']
-//     },
-//     {
-//         id: 17,
-//         name: 'VINTAGE THE NORTH FACE HAT',
-//         price: 60,
-//         size: 'OS',
-//         gender: 'Unisex',
-//         description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/hats/VINTAGE THE NORTH FACE HAT.png',
-//         tags: ['men', 'women', 'unisex', 'hats']
-//     },
-//     {
-//         id: 18,
-//         name: 'VINTAGE ADIDAS HAT',
-//         price: 60,
-//         size: 'OS',
-//         gender: 'Unisex',
-//         description: 'A classic Nike baseball t-shirt, perfect for vintage sportswear fans.',
-//         quantity: 1,
-//         imgSrc: 'assets/images/hats/VINTAGE ADIDAS HAT.png',
-//         tags: ['men', 'women', 'unisex', 'hats']
-//     },
-// ];
-
-
 function signout() {
     fetch('http://localhost:5500/signout', {
         method: 'GET',
@@ -217,9 +14,8 @@ function signout() {
         });
 }
 
-// Initialize the cart by checking for existing data in localStorage
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let itemsToShow = 8; // Start by showing 4 items
+let itemsToShow = 8;
 
 function getFourItemsByCategory(category) {
     console.log(category);
@@ -230,7 +26,7 @@ function getFourItemsByCategory(category) {
 function showItem(item) {
     console.log(item);
     const itemContainer = document.getElementById("item-container");
-    itemContainer.innerHTML = ""; // Clear previous content
+    itemContainer.innerHTML = "";
 
     const itemDiv = document.createElement('div');
 
@@ -273,6 +69,12 @@ function showItem(item) {
 
 }
 
+function getCartTotal() {
+    const cartItems = getCartItems();
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return total;
+}
+
 function renderMightLikeItems(category, boxNumber) {
     let mightLikeContainer = document.getElementById("cardbox1");
     if (boxNumber === 1) {
@@ -281,7 +83,7 @@ function renderMightLikeItems(category, boxNumber) {
     else if (boxNumber === 2) {
         mightLikeContainer = document.getElementById("cardbox2");
     }
-    mightLikeContainer.innerHTML = ""; // Clear previous content
+    mightLikeContainer.innerHTML = "";
 
     const items = getFourItemsByCategory(category);
     console.log(items);
@@ -335,16 +137,14 @@ function renderItems(items) {
     console.log(items);
     const loadMoreContainer = document.getElementById("loadmore");
     const mightLikeContainer = document.getElementById("items-container");
-    mightLikeContainer.innerHTML = ""; // Clear previous content
+    mightLikeContainer.innerHTML = "";
 
-    // Iterate through items and limit the display based on itemsToShow
     for (let i = 0; i < Math.min(items.length, itemsToShow); i += 4) {
         const wrapperDiv = document.createElement('div');
         wrapperDiv.className = "flex";
         const cardboxDiv = document.createElement('div');
         cardboxDiv.className = "cardbox"; // Create a new cardbox for every 4 items
 
-        // Create the cards for this set
         for (let j = i; j < i + 4 && j < items.length; j++) {
             const item = items[j];
             const itemDiv = document.createElement('div');
@@ -357,10 +157,10 @@ function renderItems(items) {
                 </div>
             </div>
             `;
-            cardboxDiv.appendChild(itemDiv); // Append the card to the cardbox
+            cardboxDiv.appendChild(itemDiv);
         }
-        wrapperDiv.appendChild(cardboxDiv); // Append the cardbox to the wrapper
-        mightLikeContainer.appendChild(wrapperDiv); // Append the cardbox to the main container
+        wrapperDiv.appendChild(cardboxDiv);
+        mightLikeContainer.appendChild(wrapperDiv);
 
         if (items.length > itemsToShow) {
             loadMoreContainer.style.display = "block";
@@ -423,14 +223,11 @@ function addToCart(itemId) {
                         const existingItem = cart.find(cartItem => cartItem._id === item._id && cartItem.size === item.size);
 
                         if (existingItem) {
-                            // If the item exists, increment the quantity
                             existingItem.quantity += 1;
                         } else {
-                            // Otherwise, add a new entry for the item, including imgSrc
                             cart.push({ ...item, quantity: 1, imgSrc: item.imgSrc });
                         }
 
-                        // Save updated cart to localStorage
                         localStorage.setItem("cart", JSON.stringify(cart));
                         console.log("Item added to cart:", item);
                         let currentCartNum = document.getElementById("cartNum").innerText;
@@ -444,15 +241,11 @@ function addToCart(itemId) {
                     .catch(error => {
                         console.error("Error:", error);
                     });
-
-                // Check if the item is already in the cart (based on id and size)
-
             }
         })
         .catch(error => {
             console.error("Error:", error);
         });
-    // Find the item in itemData based on the ID
 
 }
 
@@ -469,26 +262,19 @@ function clearCart() {
 
 // Function to remove a specific item from the cart
 function removeFromCart(itemId, size) {
-    // Filter out the item to be removed
     cart = cart.filter(item => !(item._id === itemId && item.size === size));
-    // Update the localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
-
-    // Re-display the cart items
     displayCart();
 }
 
-// Function to display the cart items on the page
 function displayCart() {
     const cartItems = getCartItems();
     const cartContainer = document.getElementById("cart-container");
-    cartContainer.innerHTML = ""; // Clear previous content
+    cartContainer.innerHTML = "";
 
-    // Create table structure
     const table = document.createElement('table');
-    table.classList.add('w-full', 'border-collapse', 'mt-5'); // Tailwind classes for styling
+    table.classList.add('w-full', 'border-collapse', 'mt-5');
 
-    // Create table header
     const header = document.createElement('thead');
     header.innerHTML = `
         <tr class="bg-gray-200">
@@ -501,7 +287,6 @@ function displayCart() {
     `;
     table.appendChild(header);
 
-    // Create table body
     const body = document.createElement('tbody');
     let totalAmount = 0;
 
@@ -538,34 +323,28 @@ function displayCart() {
     table.appendChild(body);
     cartContainer.appendChild(table);
 
-    // Display total amount
     document.getElementById("total").innerText = totalAmount;
 }
 
 function updateAmount(itemId, operation) {
     cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Find the item in the cart by its _id
     const itemIndex = cart.findIndex(item => item._id === itemId);
     console.log(itemIndex);
     if (itemIndex !== -1) {
         const item = cart[itemIndex];
 
-        // Update quantity based on the operation
         if (operation === '+') {
             item.quantity += 1;
         } else if (operation === '-' && item.quantity > 1) {
             item.quantity -= 1;
         } else if (operation === '-' && item.quantity === 1) {
-            // Optionally remove the item if quantity is zero or show a message
             removeFromCart(item._id, item.size);
-            return; // Exit the function early if the item is removed
+            return;
         }
 
-        // Save updated cart to localStorage
         localStorage.setItem("cart", JSON.stringify(cart));
 
-        // Re-display the cart to reflect changes
         displayCart();
     }
 }
@@ -583,15 +362,13 @@ function validateCart() {
             return false;
         }
     }
-
-
-
-    totalSum = checkCartItems(cartItems);
+    checkCartItems(cartItems);
 }
 
 
+
 async function checkCartItems(cartItems) {
-    let totalSum = 0;
+
     const fetchPromises = cartItems.map(item =>
         fetch('http://localhost:5500/getItemById/' + item._id, { method: 'GET' })
             .then(response => response.json())
@@ -623,6 +400,11 @@ async function checkCartItems(cartItems) {
             displayCart();
             return false;
         }
+
+
+        window.location.href = "checkout.html";
+        
+
 
     } catch (error) {
         console.error("Error in processing cart items:", error);
