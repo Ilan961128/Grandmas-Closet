@@ -64,8 +64,12 @@
         <div class="flex justify-center py-16 text-bold text-5xl">
             YOUR CART
         </div>
+        <!-- divider -->
+        <div class="divider"></div>
+        <div class="divider-reversed"></div>
         <div id="cart-container"></div>
     </div>
+
 
     <!-- Back to Shop Button if Cart is Empty -->
     <div class="mx-40 flex justify-center" id="empty-cart-message" style="display: none;">
@@ -79,11 +83,11 @@
     <div class="mx-40 flex flex-col justify-center pt-16 text-bold text-3xl text-center">
         <div>Total Amount:</div>
         <div><span id="total"></span>₪</div>
-         
+
     </div>
 
     <!-- Checkout Button -->
-    <div class="mx-40 flex justify-center" id="checkout-button">
+    <div class="mx-40 flex justify-center mb-16" id="checkout-button">
         <div class="thebutton" onclick="location.href='/checkout.html'">
             Checkout
         </div>
