@@ -503,6 +503,7 @@ function displayCart() {
 
     // Create table body
     const body = document.createElement('tbody');
+    let totalAmount = 0;
 
     if (cartItems.length === 0) {
         const row = document.createElement('tr');
@@ -513,6 +514,9 @@ function displayCart() {
             const row = document.createElement('tr');
             row.classList.add('border-b');
 
+            const itemTotal = item.quantity * item.price;
+            totalAmount += itemTotal;
+
             row.innerHTML = `
                 <td class="py-2 px-4">
                     <img src="${item.imgSrc}" alt="${item.name}" class="w-16 h-16 object-cover inline-block mr-2">
@@ -520,7 +524,7 @@ function displayCart() {
                 </td>
                 <td class="py-2 px-4">${item.size}</td>
                 <td class="py-2 px-4">${item.quantity}</td>
-                <td class="py-2 px-4">${item.quantity * item.price}₪</td>
+                <td class="py-2 px-4">${itemTotal}₪</td>
                 <td class="py-2 px-4">
                     <button onclick="removeFromCart(${item._id}, '${item.size}')" class="text-red-500 hover:text-red-700">
                         <i class="fas fa-trash-alt"></i>
@@ -533,6 +537,9 @@ function displayCart() {
 
     table.appendChild(body);
     cartContainer.appendChild(table);
+
+    // Display total amount
+    document.getElementById("total").innerText = totalAmount;
 }
 
 

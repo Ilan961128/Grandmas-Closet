@@ -75,11 +75,27 @@
         </div>
     </div>
 
+    <!-- Total -->
+    <div class="mx-40 flex flex-col justify-center pt-16 text-bold text-3xl text-center">
+        <div>Total Amount:</div>
+        <div><span id="total"></span>₪</div>
+         
+    </div>
+
+    <!-- Checkout Button -->
+    <div class="mx-40 flex justify-center" id="checkout-button">
+        <div class="thebutton" onclick="location.href='/checkout.html'">
+            Checkout
+        </div>
+    </div>
+
     <!-- Script to Fetch and Display Cart Items -->
 
     <!-- Script to Display Cart -->
     <script src="assets/js/general.js"></script>
-    <script> displayCart(); </script>
+    <script> displayCart();
+
+    </script>
 </body>
 
 </html>
