@@ -345,6 +345,18 @@ app.post("/create_order", async (req, res) => {
     }
 });
 
+// ---------- Get All Orders ----------
+app.get("/getOrders", async (req, res) => {
+    if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const orders = await Orders.find({});
+        res.status(200).json({ orders });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 
 
