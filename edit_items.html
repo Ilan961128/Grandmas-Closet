@@ -286,7 +286,7 @@
             const row = `
             <tr>
                 <td><img src="${item.imgSrc}" alt=${item.name}" class="w-[100px] h-[100px] object-fit" /></td>
-                <td>${truncate(item.name)}</td>
+                <td><a href="item.html?id=${item._id}">${truncate(item.name)}</a></td>
                 <td>${truncate(item.price)}</td>
                 <td>${truncate(item.size)}</td>
                 <td>${truncate(item.gender)}</td>

@@ -520,10 +520,10 @@ function displayCart() {
             row.innerHTML = `
                 <td class="py-2 px-4">
                     <img src="${item.imgSrc}" alt="${item.name}" class="w-16 h-16 object-cover inline-block mr-2">
-                    ${item.name}
+                    <a href="/item.html?id=${item._id}">${item.name}</a>
                 </td>
                 <td class="py-2 px-4">${item.size}</td>
-                <td class="py-2 px-4">${item.quantity}</td>
+                <td class="py-2 px-4"><span onclick=updateAmount('${item._id}','-')> - </span><span id="quantity">${item.quantity}</span><span onclick=updateAmount('${item._id}','+')> + </span></td>
                 <td class="py-2 px-4">${itemTotal}₪</td>
                 <td class="py-2 px-4">
                     <button onclick="removeFromCart('${item._id}', '${item.size}')" class="text-red-500 hover:text-red-700">
@@ -542,6 +542,88 @@ function displayCart() {
     document.getElementById("total").innerText = totalAmount;
 }
 
+function updateAmount(itemId, operation) {
+    cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Find the item in the cart by its _id
+    const itemIndex = cart.findIndex(item => item._id === itemId);
+    console.log(itemIndex);
+    if (itemIndex !== -1) {
+        const item = cart[itemIndex];
+
+        // Update quantity based on the operation
+        if (operation === '+') {
+            item.quantity += 1;
+        } else if (operation === '-' && item.quantity > 1) {
+            item.quantity -= 1;
+        } else if (operation === '-' && item.quantity === 1) {
+            // Optionally remove the item if quantity is zero or show a message
+            removeFromCart(item._id, item.size);
+            return; // Exit the function early if the item is removed
+        }
+
+        // Save updated cart to localStorage
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Re-display the cart to reflect changes
+        displayCart();
+    }
+}
+
+function validateCart() {
+    const cartItems = getCartItems();
+    if (cartItems.length === 0) {
+        alert("Your cart is empty!");
+        return false;
+    }
+
+    for (let i = 0; i < cartItems.length; i++) {
+        if (cartItems[i].quantity < 1) {
+            alert("Quantity must be at least 1!");
+            return false;
+        }
+    }
 
 
+
+    totalSum = checkCartItems(cartItems);
+}
+
+
+async function checkCartItems(cartItems) {
+    let totalSum = 0;
+    const fetchPromises = cartItems.map(item =>
+        fetch('http://localhost:5500/getItemById/' + item._id, { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.item);
+                if (item.quantity > data.item.quantity) {
+                    alert("Not enough stock for " + data.item.name + "!");
+                    throw new Error("Not enough stock for " + data.item.name);
+                }
+                return data.item.price * item.quantity;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                throw error;
+            })
+    );
+
+    try {
+        const prices = await Promise.all(fetchPromises);
+        totalSum = prices.reduce((sum, price) => sum + price, 0);
+        console.log(totalSum);
+
+        var totalDOMamountSTR = document.getElementById("total").innerText;
+        var totalDOMamount = parseInt(totalDOMamountSTR);
+
+        if (totalSum !== totalDOMamount) {
+            alert("The total amount has changed. Please refresh the page and try again.");
+            return false;
+        }
+
+    } catch (error) {
+        console.error("Error in processing cart items:", error);
+    }
+}
 
