@@ -201,7 +201,7 @@
 
     $("form").submit(function (e) {
         e.preventDefault();
-        fetch('http://localhost:5500/create_order/', {
+        fetch('http://localhost:5500/create_order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -219,7 +219,8 @@
         })
             .then(response => response.json())
             .then(data => {
-                if (data.message === "Success") {
+                if (data.message === "Order created successfully") {
+                    clearCart();
                     window.location.href = "/checkout_redirect.html";
                 } else {
                     $('#errorMessage').text(data.message);

@@ -73,47 +73,15 @@
 
 
     <div>
-        <h1 class="text-5xl font-bold py-8 flex justify-center">Checkout</h1>
-        <div class="flex justify-center">
-            <h2>Thank you for shopping with us! Your order has been placed.</h2>
+        <h1 class="text-5xl font-bold pt-32 pb-10 flex justify-center">Thank you!</h1>
+        <div class="flex justify-center text-xl flex-col text-center">
+            <h2>Your order has been placed.</h2>
+            <h2>Thank you for shopping with us!</h2>
         </div>
     </div>
 
     <script src="./assets/js/general.js"></script>
     <script>
-        window.onload = function () {
-            displayCart();
-            checkSession();
-            let carNumbers = howManyItemsInCart();
-            document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
-        };
-
-        function checkSession() {
-            fetch("http://localhost:5500/checkSession")
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message === "Authorized") {
-                        document.getElementById("signUpLink").style.display = "none";
-                        document.getElementById("signInLink").style.display = "none";
-                        document.getElementById("signOutLink").style.display = "inline";
-                        document.getElementById("icons-container").style.display = "inline";
-
-                    } else if (data.message === "Unauthorized") {
-                        document.getElementById("signUpLink").style.display = "inline";
-                        document.getElementById("signInLink").style.display = "inline";
-                        document.getElementById("signOutLink").style.display = "none";
-                        document.getElementById("icons-container").style.display = "none";
-                    }
-                    else if (data.message === "Admin") {
-                        document.getElementById("signUpLink").style.display = "none";
-                        document.getElementById("signInLink").style.display = "none";
-                        document.getElementById("signOutLink").style.display = "inline";
-                        document.getElementById("controlPanelLink").style.display = "inline";
-                    }
-                })
-                .catch(error => console.error("Error checking session:", error));
-        }
-
     </script>
 </body>
 
