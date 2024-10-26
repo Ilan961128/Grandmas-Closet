@@ -526,7 +526,7 @@ function displayCart() {
                 <td class="py-2 px-4">${item.quantity}</td>
                 <td class="py-2 px-4">${itemTotal}₪</td>
                 <td class="py-2 px-4">
-                    <button onclick="removeFromCart(${item._id}, '${item.size}')" class="text-red-500 hover:text-red-700">
+                    <button onclick="removeFromCart('${item._id}', '${item.size}')" class="text-red-500 hover:text-red-700">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </td>
