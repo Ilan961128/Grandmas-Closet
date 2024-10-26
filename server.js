@@ -325,7 +325,8 @@ app.post("/create_order", async (req, res) => {
             city: req.body.city,
             street: req.body.street,
             number: req.body.number,
-            phone: req.body.phone
+            phone: req.body.phone,
+            createdAt: new Date()
         };
 
         console.log(data);
@@ -356,6 +357,74 @@ app.get("/getOrders", async (req, res) => {
         res.status(200).json({ orders });
     } catch (error) {
         console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// ---------- Get Order By ID ----------
+app.get("/getOrderById/:order_id", async (req, res) => {
+    // if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const order_id = req.params.order_id;
+        const order = await Orders.findById(order_id)
+            .populate("items.item") // Populate the 'item' field within each 'items' subdocument
+            .exec();
+
+        res.status(200).json({ order });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// ---------- Update Order By ID ----------
+app.post("/update_order/:order_id", async (req, res) => {
+    if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    const order_id = req.params.order_id;
+    try {
+        var data = {
+            items: req.body.items,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            price: req.body.price,
+            status: req.body.status,
+            city: req.body.city,
+            street: req.body.street,
+            number: req.body.number,
+            phone: req.body.phone,
+        };
+
+        const updatedFields = data;
+        const updatedOrder = await Orders.findByIdAndUpdate(order_id, updatedFields, {
+            new: true,
+        });
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        return res.status(200).json(updatedOrder);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// ---------- Delete Order by ID ----------
+app.post("/delete_order/:order_id", async (req, res) => {
+    try {
+        if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+        const order_id = req.params.order_id;
+        const deletedOrder = await Orders.findByIdAndDelete(order_id);
+
+        if (!deletedOrder) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        console.log("Order Deleted Successfully:", deletedOrder);
+        res.status(200).json({ message: "Order deleted successfully" });
+    } catch (error) {
+        console.error(error);
         res.status(500).json({ message: error.message });
     }
 });
