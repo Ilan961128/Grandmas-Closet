@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grandma's Closet [Edit Items]</title>
+    <title>Grandma's Closet [Edit Orders]</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
@@ -85,23 +85,21 @@
         </div>
     </div>
 
-    <!-- edit items -->
+    <!-- edit orders -->
     <a href="/control_panel.html">
         <h1 class="text-3xl font-bold pt-4 flex justify-start ml-[40px] underline">Back To Panel</h1>
     </a>
-    <h1 class="text-5xl font-bold pt-5 flex justify-center">Edit Items</h1>
+    <h1 class="text-5xl font-bold pt-5 flex justify-center">Edit Orders</h1>
     <div class="flex flex-row justify-center">
-        <table id="itemTable" class="text-md my-14 text-white">
+        <table id="orderTable" class="text-md my-14 text-white">
             <thead>
                 <tr class="">
-                    <th>Image</th>
+                    <th>Items</th>
                     <th>Name</th>
                     <th>Price</th>
-                    <th>Size</th>
-                    <th>Gender</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Tags</th>
+                    <th>Status</th>
+                    <th>Phone</th>
+                    <th>Address</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -142,20 +140,20 @@
     </div>
 
     <!-- update modal -->
-    <div id="itemUpdateModal" class="h-[160vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
+    <div id="orderUpdateModal" class="h-[160vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
         <div class="flex justify-center">
             <div class="h-[1100px] w-[40%] bg-[#131313] absolute mt-20 z-100 border-4 border-white">
                 <div class="flex justify-center">
                     <div>
-                        <h1 class="text-5xl font-bold py-8 flex justify-center text-white">Update Item</h1>
+                        <h1 class="text-5xl font-bold py-8 flex justify-center text-white">Update Order</h1>
                     </div>
                 </div>
                 <div class="form-row flex flex-col w-[80%] mx-auto">
 
                     <!-- Image -->
-                    <div class="form-group flex flex-col mb-3 mx-auto items-center">
+                    <div class="form-group flex flex-col mb-3 mx-auto orders-center">
                         <label for="image" class="text-white">Image</label>
-                        <img src="" alt="item" id="itemImage" class="w-[100px] h-[100px] object-fit" />
+                        <img src="" alt="order" id="orderImage" class="w-[100px] h-[100px] object-fit" />
                         <div>
                             <input type="file" id="imgSrc" name="image"
                                 class="ml-[230px] mt-2 border-2 border-[#131313] w-fit" required />
@@ -234,19 +232,19 @@
     </div>
 
     <!-- delete modal -->
-    <div id="itemDeleteModal" class="h-[100vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
+    <div id="orderDeleteModal" class="h-[100vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
         <div class="flex justify-center">
             <div class="h-[50%] w-[40%] bg-[#131313] absolute mt-20 z-100 border-4 border-white">
                 <div class="flex justify-center">
                     <div>
-                        <h1 class="text-5xl font-bold py-8 flex justify-center text-white">Delete Item</h1>
+                        <h1 class="text-5xl font-bold py-8 flex justify-center text-white">Delete Order</h1>
                     </div>
                 </div>
                 <div class="flex flex-col justify-center">
                     <div class="text-white text-center">
-                        Are you sure you want to delete this item?
+                        Are you sure you want to delete this order?
                     </div>
-                    <img src="" alt="item" id="itemImageDelete" class="w-[100px] h-[100px] object-fit mx-auto my-5" />
+                    <img src="" alt="order" id="orderImageDelete" class="w-[100px] h-[100px] object-fit mx-auto my-5" />
                     <div class="flex justify-center flex-col mx-auto">
                         <button class="thebutton-white" id="deleteChangesBtn">
                             DELETE
@@ -266,36 +264,33 @@
 
 <script src="./assets/js/general.js"></script>
 <script>
-    let items;
+    let orders;
 
-    function fetchItems() {
-        $.get("http://localhost:5500/getItems", function (data) {
-            items = data.items;
-            console.log(items);
-            populateTable(items);
+    function fetchOrders() {
+        $.get("http://localhost:5500/getOrders", function (data) {
+            orders = data.orders;
+            console.log(orders);
+            populateTable(orders);
         });
     }
 
-    function populateTable(items) {
-        const tableBody = $("#itemTable tbody");
+    function populateTable(orders) {
+        const tableBody = $("#orderTable tbody");
         tableBody.empty();
 
-        items.forEach(function (item) {
+        orders.forEach(function (order) {
             const truncate = (text) => text.length > 15 ? text.substring(0, 15) + '...' : text;
-
             const row = `
             <tr>
-                <td><img src="${item.imgSrc}" alt=${item.name}" class="w-[100px] h-[100px] object-fit" /></td>
-                <td><a href="item.html?id=${item._id}">${truncate(item.name)}</a></td>
-                <td>${truncate(item.price)}</td>
-                <td>${truncate(item.size)}</td>
-                <td>${truncate(item.gender)}</td>
-                <td>${truncate(item.description)}</td>
-                <td>${truncate(item.quantity)}</td>
-                <td>${item.tags}</td>
+                <td><a href="order.html?id=${order._id}">Show Items</a></td>
+                <td>${truncate(order.first_name)} ${truncate(order.last_name)}</td>
+                <td>${truncate(order.price)}</td>
+                <td>${truncate(order.status)}</td>
+                <td>${truncate(order.phone)}</td>
+                <td>${truncate(order.street)} ${truncate(order.number)}, ${truncate(order.city)}</td>
                 <td>
-                    <i onclick="updateItem('${item._id}')" class="fa fa-edit" style="font-size:24px; margin-right: 10px; cursor: pointer"></i>
-                    <i onclick="deleteItem('${item._id}')" class="fa fa-trash" style="font-size:24px;color:red; cursor: pointer"></i>
+                    <i onclick="updateOrder('${order._id}')" class="fa fa-edit" style="font-size:24px; margin-right: 10px; cursor: pointer"></i>
+                    <i onclick="deleteOrder('${order._id}')" class="fa fa-trash" style="font-size:24px;color:red; cursor: pointer"></i>
                 </td>
             </tr>
         `;
@@ -304,46 +299,46 @@
     }
 
 
-    window.deleteItem = function (itemId) {
+    window.deleteOrder = function (orderId) {
         window.scrollTo(0, 0);
-        document.getElementById("itemDeleteModal").style.display = "inline";
-        items.forEach(function (item) {
-            if (item._id === itemId) {
-                $("#itemImageDelete").attr("src", item.imgSrc);
+        document.getElementById("orderDeleteModal").style.display = "inline";
+        orders.forEach(function (order) {
+            if (order._id === orderId) {
+                $("#orderImageDelete").attr("src", order.imgSrc);
             }
         });
 
         $('#deleteChangesBtn').off('click').on('click', function () {
-            console.log(`Delete user with ID: ${itemId}`);
-            $.post(`http://localhost:5500/delete_item/${itemId}`, function (data) {
-                fetchItems();
-                document.getElementById("itemDeleteModal").style.display = "none";
+            console.log(`Delete user with ID: ${orderId}`);
+            $.post(`http://localhost:5500/delete_order/${orderId}`, function (data) {
+                fetchOrders();
+                document.getElementById("orderDeleteModal").style.display = "none";
             });
         });
 
         $("#cancelChangesBtnDlt").off('click').on("click", function () {
-            document.getElementById("itemDeleteModal").style.display = "none";
+            document.getElementById("orderDeleteModal").style.display = "none";
         });
 
     };
 
-    window.updateItem = function (itemId) {
+    window.updateOrder = function (orderId) {
         window.scrollTo(0, 0);
-        console.log(`Update user with ID: ${itemId}`);
-        const itemToUpdate = items.find(item => item._id === itemId);
+        console.log(`Update user with ID: ${orderId}`);
+        const orderToUpdate = orders.find(order => order._id === orderId);
 
-        console.log(itemToUpdate);
+        console.log(orderToUpdate);
 
-        document.getElementById("itemUpdateModal").style.display = "inline";
-        $("#itemImage").attr("src", itemToUpdate.imgSrc);
-        $("#id").val(itemToUpdate._id);
-        $("#name").val(itemToUpdate.name);
-        $("#price").val(itemToUpdate.price);
-        $("#size").val(itemToUpdate.size);
-        $("#gender").val(itemToUpdate.gender);
-        $("#description").val(itemToUpdate.description);
-        $("#quantity").val(itemToUpdate.quantity);
-        $("#tags").val(itemToUpdate.tags);
+        document.getElementById("orderUpdateModal").style.display = "inline";
+        $("#orderImage").attr("src", orderToUpdate.imgSrc);
+        $("#id").val(orderToUpdate._id);
+        $("#name").val(orderToUpdate.name);
+        $("#price").val(orderToUpdate.price);
+        $("#size").val(orderToUpdate.size);
+        $("#gender").val(orderToUpdate.gender);
+        $("#description").val(orderToUpdate.description);
+        $("#quantity").val(orderToUpdate.quantity);
+        $("#tags").val(orderToUpdate.tags);
 
 
         $("#saveChangesBtn").off('click').on("click", function () {
@@ -352,11 +347,11 @@
             let imgSrc;
 
             if ($("#imgSrc").val() === "")
-                imgSrc = itemToUpdate.imgSrc;
+                imgSrc = orderToUpdate.imgSrc;
             else
                 imgSrc = $("#imgSrc").val();
 
-            const updatedItem = {
+            const updatedOrder = {
                 imgSrc: imgSrc,
                 name: $("#name").val(),
                 price: parseInt($("#price").val()),
@@ -367,14 +362,14 @@
                 tags: tagsArray,
             };
 
-            console.log(updatedItem);
+            console.log(updatedOrder);
 
-            fetch(`http://localhost:5500/update_item/${itemId}`, {
+            fetch(`http://localhost:5500/update_order/${orderId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedItem),
+                body: JSON.stringify(updatedOrder),
             })
                 .then(response => {
                     if (!response.ok) {
@@ -383,21 +378,21 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log("Item updated successfully:", data);
-                    fetchItems();
-                    document.getElementById("itemUpdateModal").style.display = "none";
+                    console.log("Order updated successfully:", data);
+                    fetchOrders();
+                    document.getElementById("orderUpdateModal").style.display = "none";
                 })
                 .catch(error => {
-                    console.error("Error updating Item:", error);
+                    console.error("Error updating Order:", error);
                 });
         });
 
         $("#cancelChangesBtn").off('click').on("click", function () {
-            document.getElementById("itemUpdateModal").style.display = "none";
+            document.getElementById("orderUpdateModal").style.display = "none";
         });
     };
 
 
-    fetchItems();
+    fetchOrders();
 
 </script>

@@ -347,9 +347,12 @@ app.post("/create_order", async (req, res) => {
 
 // ---------- Get All Orders ----------
 app.get("/getOrders", async (req, res) => {
-    if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    // if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
     try {
-        const orders = await Orders.find({});
+        const orders = await Orders.find({})
+            .populate("items.item") // Populate the 'item' field within each 'items' subdocument
+            .exec();
+
         res.status(200).json({ orders });
     } catch (error) {
         console.log(error);

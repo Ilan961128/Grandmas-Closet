@@ -128,7 +128,7 @@
 
                 <!-- Expiry Date -->
                 <div class="form-group flex flex-col mb-3">
-                    <label for="expiryDate">Expiry Date</label>
+                    <label for="expiryDate">Expiry Date (MM/YY)</label>
                     <input type="text" value="01/27" id="expiryDate" name="expiryDate" class="form-control border-2 border-[#131313]"
                         required />
                 </div>
@@ -207,7 +207,7 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                items: getCartItems(),
+                items: getCartItems().map(item => ({ item: item._id, quantity: item.quantity })), // Map each item to include its ID and quantity
                 first_name: $('#firstName').val(),
                 last_name: $('#lastName').val(),
                 phone: $('#phoneNumber').val(),

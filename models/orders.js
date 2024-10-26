@@ -4,9 +4,16 @@ const mongoose = require('mongoose');
 const orderSchema = mongoose.Schema({
     items: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'items', // Reference to the 'items' collection
-            required: [true, "Order must contain at least one item"]
+            item: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'items', // Reference to the 'items' collection
+                required: [true, "Order must contain at least one item"]
+            },
+            quantity: {
+                type: Number,
+                required: [true, "Please specify the quantity of each item in the order"],
+                min: [1, "Quantity must be at least 1"]
+            }
         }
     ],
     first_name: {
