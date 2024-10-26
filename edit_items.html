@@ -236,7 +236,7 @@
     <!-- delete modal -->
     <div id="itemDeleteModal" class="h-[100vh] w-[100vw] bg-[#13131370] absolute top-0 z-100 hidden">
         <div class="flex justify-center">
-            <div class="h-[40%] w-[40%] bg-[#131313] absolute mt-20 z-100 border-4 border-white">
+            <div class="h-[50%] w-[40%] bg-[#131313] absolute mt-20 z-100 border-4 border-white">
                 <div class="flex justify-center">
                     <div>
                         <h1 class="text-5xl font-bold py-8 flex justify-center text-white">Delete Item</h1>
@@ -246,6 +246,7 @@
                     <div class="text-white text-center">
                         Are you sure you want to delete this item?
                     </div>
+                    <img src="" alt="item" id="itemImageDelete" class="w-[100px] h-[100px] object-fit mx-auto my-5" />
                     <div class="flex justify-center flex-col mx-auto">
                         <button class="thebutton-white" id="deleteChangesBtn">
                             DELETE
@@ -304,7 +305,13 @@
 
 
     window.deleteItem = function (itemId) {
+        window.scrollTo(0, 0);
         document.getElementById("itemDeleteModal").style.display = "inline";
+        items.forEach(function (item) {
+            if (item._id === itemId) {
+                $("#itemImageDelete").attr("src", item.imgSrc);
+            }
+        });
 
         $('#deleteChangesBtn').off('click').on('click', function () {
             console.log(`Delete user with ID: ${itemId}`);
@@ -315,12 +322,13 @@
         });
 
         $("#cancelChangesBtnDlt").off('click').on("click", function () {
-            document.getElementById("itemUpdateModal").style.display = "none";
+            document.getElementById("itemDeleteModal").style.display = "none";
         });
 
     };
 
     window.updateItem = function (itemId) {
+        window.scrollTo(0, 0);
         console.log(`Update user with ID: ${itemId}`);
         const itemToUpdate = items.find(item => item._id === itemId);
 

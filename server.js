@@ -292,6 +292,25 @@ app.post("/update_item/:item_id", async (req, res) => {
     }
 });
 
+// ---------- Delete Item by ID ----------
+app.post("/delete_item/:item_id", async (req, res) => {
+    try {
+        if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+        const item_id = req.params.item_id;
+        const deletedItem = await Items.findByIdAndDelete(item_id);
+
+        if (!deletedItem) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+        console.log("Item Deleted Successfully:", deletedItem);
+        res.status(200).json({ message: "Item deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 
 
