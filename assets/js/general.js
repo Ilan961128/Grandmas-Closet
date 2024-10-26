@@ -268,11 +268,30 @@ function removeFromCart(itemId, size) {
 }
 
 function displayCart() {
+
     const cartItems = getCartItems();
+    if (cartItems.length === 0) {
+        console.log("Cart is empty");
+        document.getElementById("empty-cart-message").innerHTML = "Nothing here! Go shopping!";
+        document.getElementById("checkOutButton").style.display = "none";
+        document.getElementById("totalAmount").style.display = "none";
+        document.getElementById("cart-table").style.display = "none";
+        document.getElementById("empty-cart-message").style.display = "block";
+
+        // document.getElementById("checkOutButton").style.display = "hidden";
+        // document.getElementById("totalAmount").style.display = "hidden";
+        // const row = document.createElement('tr');
+        // row.innerHTML = `<td colspan="5" class="text-center py-4">Nothing here! Go shopping!</td>`;
+        // cartContainer.appendChild(row);
+
+        return;
+    }
+    document.getElementById("empty-cart-message").style.display = "none";
     const cartContainer = document.getElementById("cart-container");
     cartContainer.innerHTML = "";
 
     const table = document.createElement('table');
+    table.id = "cart-table";
     table.classList.add('w-full', 'border-collapse', 'mt-5');
 
     const header = document.createElement('thead');
@@ -290,19 +309,14 @@ function displayCart() {
     const body = document.createElement('tbody');
     let totalAmount = 0;
 
-    if (cartItems.length === 0) {
+    cartItems.forEach(item => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="5" class="text-center py-4">Nothing here! Go shopping!</td>`;
-        body.appendChild(row);
-    } else {
-        cartItems.forEach(item => {
-            const row = document.createElement('tr');
-            row.classList.add('border-b');
+        row.classList.add('border-b');
 
-            const itemTotal = item.quantity * item.price;
-            totalAmount += itemTotal;
+        const itemTotal = item.quantity * item.price;
+        totalAmount += itemTotal;
 
-            row.innerHTML = `
+        row.innerHTML = `
                 <td class="py-2 px-4">
                     <img src="${item.imgSrc}" alt="${item.name}" class="w-16 h-16 object-cover inline-block mr-2">
                     <a href="/item.html?id=${item._id}">${item.name}</a>
@@ -316,9 +330,9 @@ function displayCart() {
                     </button>
                 </td>
             `;
-            body.appendChild(row);
-        });
-    }
+        body.appendChild(row);
+    });
+
 
     table.appendChild(body);
     cartContainer.appendChild(table);
@@ -403,7 +417,7 @@ async function checkCartItems(cartItems) {
 
 
         window.location.href = "checkout.html";
-        
+
 
 
     } catch (error) {

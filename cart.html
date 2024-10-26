@@ -84,20 +84,20 @@
     </div>
 
 
-    <div class="mx-40 flex justify-center" id="empty-cart-message" style="display: none;">
-        <div class=" mx-40 flex justify-center text-[60px] w-fit mx-auto  text-white p-5 bg-[#131313] "
+    <div class="mx-40 flex justify-center" >
+        <div id="empty-cart-message"  class="cursor-pointer mt-20 mx-40 flex justify-center text-[40px] w-fit mx-auto  text-white p-5 bg-[#131313]"
             onclick="location.href='/shop.html'">
-            Nothing here. Go shopping!
+            
         </div>
     </div>
 
     <!-- Total -->
-    <div class="mx-40 flex flex-col justify-center pt-16 text-bold text-3xl text-center">
+    <div id="totalAmount" class="mx-40 flex flex-col justify-center pt-16 text-bold text-3xl text-center">
         <div>Total Amount:</div>
         <div><span id="total"></span>₪</div>
     </div>
 
-    <div class="mx-40 flex justify-center mb-16" id="checkout-button">
+    <div id="checkOutButton" class="mx-40 flex justify-center mb-16" id="checkout-button">
         <div class="thebutton" onclick="validateCart()">
             Checkout
         </div>
