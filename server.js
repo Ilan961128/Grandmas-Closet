@@ -485,6 +485,50 @@ app.get("/getOrdersBySession", async (req, res) => {
 
 
 
+// ---------- Avarage Total Price Orders By Month ----------
+app.get("/getOrdersByMonth", async (req, res) => {
+    // if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const orders = await Orders.aggregate([
+            {
+                $group: {
+                    _id: { $month: "$createdAt" },
+                    avgTotalPrice: { $avg: "$price" },
+                },
+            },
+        ]);
+
+        res.status(200).json({ orders });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+// ---------- Total Orders By Status ----------
+app.get("/getOrdersByStatus", async (req, res) => {
+    // if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const orders = await Orders.aggregate([
+            {
+                $group: {
+                    _id: "$status",
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+        res.status(200).json({ orders });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+
+
 
 
 // ---------- Sign out ---------

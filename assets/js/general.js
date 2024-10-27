@@ -124,8 +124,8 @@ function loadMoreItems() {
 }
 
 
-function getAllItems(itemData) {
-    renderItems(itemData);
+function getAllItems(itemData, control_panel = false) {
+    renderItems(itemData, control_panel);
 }
 
 function howManyItemsInCart() {
@@ -133,11 +133,13 @@ function howManyItemsInCart() {
     return cartItems.length;
 }
 
-function renderItems(items) {
+function renderItems(items, control_panel) {
     console.log(items);
     const loadMoreContainer = document.getElementById("loadmore");
     const mightLikeContainer = document.getElementById("items-container");
-    mightLikeContainer.innerHTML = "";
+    if (!control_panel) {
+        mightLikeContainer.innerHTML = "";
+    }
 
     for (let i = 0; i < Math.min(items.length, itemsToShow); i += 4) {
         const wrapperDiv = document.createElement('div');
@@ -160,13 +162,18 @@ function renderItems(items) {
             cardboxDiv.appendChild(itemDiv);
         }
         wrapperDiv.appendChild(cardboxDiv);
-        mightLikeContainer.appendChild(wrapperDiv);
 
-        if (items.length > itemsToShow) {
-            loadMoreContainer.style.display = "block";
-        } else {
-            loadMoreContainer.style.display = "none";
+        if (!control_panel) {
+            mightLikeContainer.appendChild(wrapperDiv);
+
+            if (items.length > itemsToShow) {
+                loadMoreContainer.style.display = "block";
+            } else {
+                loadMoreContainer.style.display = "none";
+            }
         }
+
+        
 
         currentData = items;
     }

@@ -1,0 +1,328 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grandma's Closet [Control Panel]</title>
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+    <!-- header -->
+    <div class="header">
+        <div>
+            <a href="/index.html" style="text-decoration: none;">
+                <span class="header-title">GRANDMA'S CLOSET</span>
+            </a>
+        </div>
+        <div class="header-links-icons">
+            <div class="header-links">
+                <a href="/index.html" style="text-decoration: none; color: #131313">
+                    <span class="header-link">Home</span>
+                </a>
+                <a href="/shop.html" style="text-decoration: none; color: #131313">
+                    <span class="header-link">Shop</span>
+                </a>
+                <a href="/faq.html" style="text-decoration: none; color: #131313 ">
+                    <span class="header-link">FAQ</span>
+                </a>
+                <a href="/about.html" style="text-decoration: none; color: #131313">
+                    <span class="header-link">About</span>
+                </a>
+                <a href="/signup.html" id="signUpLink" style="text-decoration: none; color: #131313; display: none;">
+                    <span class="header-link">Sign Up</span>
+                </a>
+                <a href="/signin.html" id="signInLink" style="text-decoration: none; color: #131313; display: none;">
+                    <span class="header-link">Sign In</span>
+                </a>
+                <a id="signOutLink" onclick="signout()" style="text-decoration: none; color: #131313; display: none;">
+                    <span class="header-link">Sign Out</span>
+                </a>
+                <a href="/control_panel.html" id="controlPanelLink"
+                    style="text-decoration: none; color: #131313; display: none;">
+                    <span class="header-link">Admin Panel</span>
+                </a>
+            </div>
+            <div id="icons-container">
+                <i class="fas fa-search"></i>
+                <a href="cart.html" style="text-decoration: none; color: #131313">
+                    <i class="fas fa-shopping-cart"></i> <span id="cartNum"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- main content -->
+    <div id="average-monthly-purchases"></div>
+    <div class="flex flex-col justify-center items-center my-10 gap-8">
+        <div id="additional-data"></div>
+        <div id="graph"></div>
+    </div>
+
+    <!-- footer -->
+    <div>
+        <div class="footer">
+            <div>
+                <span class="footer-title">GRANDMA'S CLOSET</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" style="text-decoration: none; color: white">
+                    <span class="footer-link">Home</span>
+                </a>
+                <a href="shop.html" style="text-decoration: none; color: white">
+                    <span class="footer-link">Shop</span>
+                </a>
+                <a href="faq.html" style="text-decoration: none; color: white">
+                    <span class="footer-link">FAQ</span>
+                </a>
+                <a href="index.html" style="text-decoration: none; color: white">
+                    <span class="footer-link">About</span>
+                </a>
+            </div>
+            <div>
+                <span class="footer-socials">Follow us on social media</span>
+            </div>
+            <div class="footer-socials-icons">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-twitter"></i>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="./assets/js/general.js"></script>
+<script>
+    async function fetchOrdersData() {
+        try {
+            const response = await fetch('http://localhost:5500/getOrdersByMonth/');
+            const data = await response.json();
+            return data.orders.map(order => ({
+                month: order._id,
+                avgTotalPrice: order.avgTotalPrice
+            }));
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return [];
+        }
+    }
+
+    async function fetchOrdersByStatusData() {
+        try {
+            const response = await fetch('http://localhost:5500/getOrdersByStatus');
+            const data = await response.json();
+            return data.orders.map(order => ({
+                status: order._id,
+                count: order.count
+            }));
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return [];
+        }
+    }
+
+    function createStatusGraph(data) {
+        const margin = { top: 60, right: 20, bottom: 100, left: 60 },
+            width = 700 - margin.left - margin.right,
+            height = 600 - margin.top - margin.bottom;
+
+        const svg = d3.select("#additional-data").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleBand()
+            .domain(data.map(d => d.status))
+            .range([0, width])
+            .padding(0.1);
+
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.count)])
+            .nice()
+            .range([height, 0]);
+
+        // Color scale for unique colors for each status
+        const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+
+        svg.append("g")
+            .call(d3.axisLeft(y).ticks(10))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "-4em")
+            .attr("text-anchor", "end")
+            .text("Total Orders");
+
+        // Add bars and apply color and value display
+        svg.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", d => x(d.status))
+            .attr("y", d => y(d.count))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height - y(d.count))
+            .attr("fill", (d, i) => colorScale(i));
+
+        // Add text labels on top of each bar
+        svg.selectAll(".label")
+            .data(data)
+            .enter().append("text")
+            .attr("class", "label")
+            .attr("x", d => x(d.status) + x.bandwidth() / 2)
+            .attr("y", d => y(d.count) - 5)
+            .attr("text-anchor", "middle")
+            .style("fill", "#333")
+            .style("font-size", "12px")
+            .text(d => d.count);
+
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .text("Total Orders By Status");
+    }
+
+    function createGraph(data) {
+        const margin = { top: 60, right: 20, bottom: 100, left: 60 },
+            width = 700 - margin.left - margin.right,
+            height = 600 - margin.top - margin.bottom;
+
+        const svg = d3.select("#graph").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleBand()
+            .domain(data.map(d => d.month))
+            .range([0, width])
+            .padding(0.1);
+
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.avgTotalPrice)])
+            .nice()
+            .range([height, 0]);
+
+        // Use a color scale for different colors for each bar
+        const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
+
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).tickFormat(d => `Month ${d}`))
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+
+        svg.append("g")
+            .call(d3.axisLeft(y).ticks(10))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "-4em")
+            .attr("text-anchor", "end")
+            .text("Average Total Price");
+
+        // Add bars and apply color and value display
+        svg.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", d => x(d.month))
+            .attr("y", d => y(d.avgTotalPrice))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height - y(d.avgTotalPrice))
+            .attr("fill", (d, i) => colorScale(i)); // Unique color for each bar
+
+        // Add text labels on top of each bar
+        svg.selectAll(".label")
+            .data(data)
+            .enter().append("text")
+            .attr("class", "label")
+            .attr("x", d => x(d.month) + x.bandwidth() / 2)
+            .attr("y", d => y(d.avgTotalPrice) - 5)
+            .attr("text-anchor", "middle")
+            .style("fill", "#333")
+            .style("font-size", "12px")
+            .text(d => d.avgTotalPrice.toFixed(2)); // Display the value on top of each bar
+
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .text("Average Purchase Amount per Month");
+    }
+
+    async function initialize() {
+        const avgMonthlyData = await fetchOrdersData();
+        createGraph(avgMonthlyData);
+
+        const statusData = await fetchOrdersByStatusData();
+        createStatusGraph(statusData);
+    }
+
+    initialize();
+
+    window.onload = function () {
+        checkSession();
+        let carNumbers = howManyItemsInCart();
+        document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
+    };
+
+    function checkSession() {
+        fetch("http://localhost:5500/checkSession")
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Authorized") {
+                    document.getElementById("signUpLink").style.display = "none";
+                    document.getElementById("signInLink").style.display = "none";
+                    document.getElementById("signOutLink").style.display = "inline";
+                    document.getElementById("icons-container").style.display = "inline";
+
+                } else if (data.message === "Unauthorized") {
+                    document.getElementById("signUpLink").style.display = "inline";
+                    document.getElementById("signInLink").style.display = "inline";
+                    document.getElementById("signOutLink").style.display = "none";
+                    document.getElementById("icons-container").style.display = "none";
+                }
+                else if (data.message === "Admin") {
+                    document.getElementById("signUpLink").style.display = "none";
+                    document.getElementById("signInLink").style.display = "none";
+                    document.getElementById("signOutLink").style.display = "inline";
+                    document.getElementById("controlPanelLink").style.display = "inline";
+                }
+            })
+            .catch(error => console.error("Error checking session:", error));
+    }
+
+</script>
