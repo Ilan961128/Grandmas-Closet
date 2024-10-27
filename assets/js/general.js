@@ -320,6 +320,63 @@ function displayOrderCart(orderId) {
             console.error("Error:", error);
         });
 }
+function displayMyOrderCart(orderId) {
+    fetch('http://localhost:5500/getOrderById/' + orderId, { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.order);
+            const cartItems = data.order.items;
+            // const cartItems = getCartItems();
+            document.getElementById("empty-cart-message").style.display = "none";
+            const cartContainer = document.getElementById("cart-container");
+            cartContainer.innerHTML = "";
+
+            const table = document.createElement('table');
+            table.id = "cart-table";
+            table.classList.add('w-full', 'border-collapse', 'mt-5');
+
+            const header = document.createElement('thead');
+            header.innerHTML = `
+                <tr class="bg-gray-200">
+                    <th class="py-2 px-4 text-left">Item</th>
+                    <th class="py-2 px-4 text-left">Size</th>
+                    <th class="py-2 px-4 text-left">Gender</th>
+                    <th class="py-2 px-4 text-left">Quantity</th>
+                    <th class="py-2 px-4 text-left">Price</th>
+                </tr>
+            `;
+            table.appendChild(header);
+
+            const body = document.createElement('tbody');
+            let totalAmount = 0;
+
+            cartItems.forEach(item => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+
+                const itemTotal = item.quantity * item.item.price;
+                totalAmount += itemTotal;
+
+                row.innerHTML = `
+                        <td class="py-2 px-4">
+                            <img src="${item.item.imgSrc}" alt="${item.item.name}" class="w-16 h-16 object-cover inline-block mr-2">
+                            <a href="/item.html?id=${item.item._id}">${item.item.name}</a>
+                        </td>
+                        <td class="py-2 px-4">${item.item.size}</td>
+                        <td class="py-2 px-4">${item.item.gender}</td>
+                        <td class="py-2 px-4">${item.item.quantity}</td>
+                        <td class="py-2 px-4">${item.item.price}</td>
+                    `;
+                body.appendChild(row);
+            });
+
+            table.appendChild(body);
+            cartContainer.appendChild(table);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+}
 
 function updateAmountOrder(itemId, operation) {
     cart = JSON.parse(localStorage.getItem("cart")) || [];
