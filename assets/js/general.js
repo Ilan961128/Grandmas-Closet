@@ -52,7 +52,7 @@ function showItem(item) {
                 </div>
                 <div>
                     <span style="font-weight: bold;">Gender: </span>
-                    <span>${item.gender}</span>
+                    <span class="capitalize">${item.gender}</span>
                 </div>
             </div>
             <div>
@@ -114,7 +114,7 @@ function filterItems(category, gender) {
             console.log(data.items);
             const items = data.items;
             const filteredItems = items.filter(item =>
-                item.tags.includes(category) && (item.gender === gender || item.gender === 'Unisex'));
+                item.tags.includes(category) && (item.gender === gender || item.gender === 'unisex'));
             console.log(filteredItems);
             renderItems(filteredItems);
         })

@@ -66,6 +66,9 @@ app.get("/checkSession", async (req, res) => {
     if (session.admin === "master") {
         return res.status(200).json({ message: "Admin" });
     }
+    if (session.admin === "supplier") {
+        return res.status(200).json({ message: "Supplier" });
+    }
     if (session.user_id === null) {
         return res.status(401).json({ message: "Unauthorized" });
     }
@@ -116,6 +119,11 @@ app.get("/SetSessionID/:user_id", async (req, res) => {
         if (admin === "master") {
             session.admin = "master";
             console.log("Admin User");
+        }
+
+        if (admin === "supplier") {
+            session.admin = "supplier";
+            console.log("Supplier User");
         }
 
         res.status(200).json({ the_user_id });

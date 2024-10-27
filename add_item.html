@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grandma's Closet</title>
+    <title>Grandma's Closet [Add Item]</title>
     <link rel="icon" type="image/x-icon" href="./assets/images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,56 +70,84 @@
         </div>
     </div>
 
-    <!-- hero -->
-    <div class="flex justify-center pt-8 items-center">
-        <h1 class="text-5xl font-bold  flex justify-center">HOT RIGHT NOW! </h1>
-        <img src="./assets/images/chilli.gif" alt="hero" class="w-[80px]">
-    </div>
-    <div id="item-container">
-    </div>
-
-    <!-- divider -->
-    <div class="divider"></div>
-    <div class="divider-reversed"></div>
-
-    <!-- you might like -->
-    <div style="display: flex; flex-direction: column; padding-top: 60px;">
-        <div>
-            <span class="glance-title">
-                YOU MIGHT LIKE...
-            </span>
-        </div>
-        <div class="cardbox" id="cardbox1">
-
-        </div>
-        <div>
-            <span class="glance-title">
-                AND ALSO THIS!
-            </span>
-        </div>
-        <div class="cardbox" id="cardbox2">
-
-        </div>
-    </div>
-
-    <!-- divider -->
-    <div class="divider"></div>
-    <div class="divider-reversed"></div>
-
-    <!-- promote -->
-    <div>
-        <div class="promote">
-            <div>
-                <span class="promote-title">Its 10C° in New York right now.</span>
-            </div>
-            <div>
-                <span class="promote-desc">Buy a Sweatshirt ASAP!</span>
-            </div>
-            <a href="shop.html" style="text-decoration: none;">
-                <div class="thebutton" style="font-size: 30px;">
-                    TO THE SHOP
+    <!-- add item -->
+    <div class="flex justify-center">
+        <div class="h-[1100px] w-[40%] mt-20 z-100">
+            <div class="flex justify-center">
+                <div>
+                    <h1 class="text-5xl font-bold py-8 flex justify-center">Add Item</h1>
                 </div>
-            </a>
+            </div>
+            <div class="form-row flex flex-col w-[80%] mx-auto">
+
+                <!-- Image -->
+                <div class="form-group flex flex-col mb-3 mx-auto items-center">
+                    <img src="https://picsum.photos/200" alt="item" id="itemImage" class="w-[100px] h-[100px] object-fit" />
+                    <div>
+                            <input type="file" id="imgSrc" name="image"
+                                class=" mt-2 border-2 border-[#131313] w-fit" required />
+                        </div>
+                </div>
+
+
+                <!-- Name -->
+                <div class="form-group flex flex-col mb-3 ">
+
+                    <label for="name" class="">Name</label>
+                    <input type="text" id="name" name="name" class="form-control border-2 border-[#131313]" required />
+                </div>
+
+                <!-- Price -->
+                <div class="form-group flex flex-col mb-3">
+                    <label for="price" class="">Price</label>
+                    <input type="text" id="price" name="price" class="form-control border-2 border-[#131313]"
+                        required />
+                </div>
+
+                <!-- Size -->
+
+                <div class="form-group flex flex-col mb-3">
+                    <label for="size" class="">Size</label>
+                    <input type="text" id="size" name="size" class="form-control border-2 border-[#131313]" required />
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group flex flex-col mb-3">
+                    <label for="gender" class="">Gender</label>
+                    <input type="text" id="gender" name="gender" class="form-control border-2 border-[#131313]"
+                        required />
+                </div>
+
+                <!-- Description -->
+                <div class="form-group flex flex-col mb-3">
+                    <label for="description" class="">Description</label>
+                    <textarea type="text" id="description" name="description"
+                        placeholder="" class="form-control border-2 border-[#131313]" required>
+                        </textarea>
+                </div>
+
+                <!-- Quantity -->
+                <div class="form-group flex flex-col mb-3">
+                    <label for="quantity" class="">Quantity</label>
+                    <input type="text" id="quantity" name="quantity" class="form-control border-2 border-[#131313]"
+                        required />
+                </div>
+
+                <!-- Tags -->
+                <div class="form-group flex flex-col mb-3">
+                    <label for="tags" class="">Tags</label>
+                    <input type="text" id="tags" name="tags" class="form-control border-2 border-[#131313]" required />
+                </div>
+
+                <div class="form-group flex justify-center flex-col mx-auto">
+                    <button class="thebutton" id="saveChangesBtn">
+                        UPDATE
+                    </button>
+                    <button class="thebutton-white bg-red-300" id="cancelChangesBtn">
+                        Cancel
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -163,38 +191,10 @@
 
 <script src="./assets/js/general.js"></script>
 <script>
-
-    document.addEventListener("DOMContentLoaded", async () => {
-        try {
-            const response = await fetch("http://localhost:5500/getItems");
-            const data = await response.json();
-            itemData = data.items;
-            showItem(itemData[0]);
-            renderMightLikeItems("sweater", 1);
-            renderMightLikeItems("shirts", 2);
-        } catch (error) {
-            console.error("Error fetching items:", error);
-        }
-    });
-
     window.onload = function () {
         checkSession();
         let carNumbers = howManyItemsInCart();
         document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
-
-        fetch('https://api.open-meteo.com/v1/forecast?latitude=40.7143&longitude=-74.006&hourly=temperature_2m&forecast_days=1')
-            .then(response => response.json())
-            .then(data => {
-                let temp = data.hourly.temperature_2m[0];
-                document.querySelector('.promote-title').innerText = `It's ${temp}C° in New York right now.`;
-                if (temp < 10) {
-                    document.querySelector('.promote-desc').innerText = "Buy a Sweater ASAP!";
-                } else {
-                    document.querySelector('.promote-desc').innerText = "Buy a Hat ASAP!";
-                }
-            })
-            .catch(error => console.error("Error fetching weather data:", error));
-
     };
 
     function checkSession() {
