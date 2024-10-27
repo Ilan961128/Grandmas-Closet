@@ -162,12 +162,24 @@
     });
 
     window.onload = function () {
-        // Check session status on load
         checkSession();
         let carNumbers = howManyItemsInCart();
         document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
 
-        // Render initial items
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=40.7143&longitude=-74.006&hourly=temperature_2m&forecast_days=1')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let temp = data.hourly.temperature_2m[0];
+                console.log(temp);
+                document.querySelector('.promote-title').innerText = `It's ${temp}C° in New York right now.`;
+                if (temp < 10) {
+                    document.querySelector('.promote-desc').innerText = "Buy a Sweater ASAP!";
+                } else {
+                    document.querySelector('.promote-desc').innerText = "Buy a Hat ASAP!";
+                }
+            })
+            .catch(error => console.error("Error fetching weather data:", error));
 
     };
 
