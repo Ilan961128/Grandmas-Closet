@@ -246,6 +246,32 @@ app.post("/update_user/:user_id", async (req, res) => {
     }
 });
 
+// ---------- Update User By Session ID ----------
+app.post("/update_user", async (req, res) => {
+    if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        var data = {
+            first_name: req.body.firstName,
+            last_name: req.body.lastName,
+            password: req.body.password,
+            email: req.body.email,
+        };
+
+        const updatedFields = data;
+        const updatedUser = await Users.findByIdAndUpdate(session.user_id, updatedFields, {
+            new: true,
+        });
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
 
 
 // ---------- Get All Items ----------
@@ -330,6 +356,7 @@ app.post("/create_order", async (req, res) => {
     try {
         var data = {
             items: req.body.items,
+            user_id: session.user_id,
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             price: req.body.price,

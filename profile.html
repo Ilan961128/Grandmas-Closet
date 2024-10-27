@@ -16,8 +16,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
         integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
         crossorigin="anonymous"></script>
-
 </head>
+<style>
+    th,
+    td {
+        padding: 15px;
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: #4c4c4c;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #2f2f2f;
+    }
+
+    thead th {
+        background-color: #d26e2b;
+        color: white;
+    }
+</style>
 
 <body>
 
@@ -70,7 +89,7 @@
 
     <!-- update profile -->
     <div class="w-[25%] text-[18px] mx-auto">
-        <h1 class="text-5xl font-bold py-8 flex justify-center">Update Profile</h1>
+        <h1 class="text-5xl font-bold py-8 flex justify-center text-center">Update Profile</h1>
 
         <div class="form-row flex flex-col">
             <!-- First Name -->
@@ -118,31 +137,25 @@
         </div>
     </div>
 
-    <div class="alert alert-danger d-none text-red-600 font-bold mt-4" id="errorMessage" role="alert"></div>
-
+    <div class="text-center">
+        <div class="alert alert-danger d-none text-red-600 font-bold mt-4" id="errorMessage" role="alert"></div>
+    </div>
 
     <!-- order history -->
-    <div class="flex justify-center text-[18px]">
-        <h1 class="text-5xl font-bold py-8 flex justify-center">Order History</h1>
-        <table class="table-auto">
+    <div class="flex flex-row justify-center text-white">
+        <table id="orderTable" class="text-md my-14 text-white">
             <thead>
-                <tr>
-                    <th class="px-4 py-2">Order ID</th>
-                    <th class="px-4 py-2">Date</th>
-                    <th class="px-4 py-2">Total</th>
-                    <th class="px-4 py-2">Status</th>
-                    <th class="px-4 py-2">Details</th>
+                <tr class="">
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>See Items</th>
                 </tr>
             </thead>
-            <tbody id="orderTable">
-                <!-- <tr>
-                    <td class="border px-4 py-2">1</td>
-                    <td class="border px-4 py-2">2021-10-01</td>
-                    <td class="border px-4 py-2">100</td>
-                    <td class="border px-4 py-2">Pending</td>
-                    <td class="border px-4 py-2"><button class="thebutton">Details</button></td>
-                </tr> -->
-            </tbody>
+            <tbody></tbody>
         </table>
     </div>
 
@@ -190,6 +203,8 @@
         let carNumbers = howManyItemsInCart();
         document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
 
+        fetchOrders();
+
         fetch("http://localhost:5500/getUserBySession")
             .then(response => response.json())
             .then(data => {
@@ -202,6 +217,48 @@
             .catch(error => console.error("Error fetching user:", error));
 
     };
+
+    function fetchOrders() {
+        $.get("http://localhost:5500/getOrdersBySession", function (data) {
+            console.log(data);
+            orders = data.orders;
+            console.log(orders);
+            populateTable(orders);
+        });
+    }
+
+    function populateTable(orders) {
+    const tableBody = $("#orderTable tbody");
+    tableBody.empty();
+
+    // Helper function to format the date
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+    };
+
+    orders.forEach(function (order) {
+        const truncate = (text) => text.length > 15 ? text.substring(0, 15) + '...' : text;
+        const row = `
+            <tr>
+                <td>${truncate(order.first_name)} ${truncate(order.last_name)}</td>
+                <td>${formatDate(order.createdAt)}</td> <!-- Format the createdAt field -->
+                <td>${truncate(order.price.toString())}</td>
+                <td>${truncate(order.status)}</td>
+                <td>${truncate(order.phone)}</td>
+                <td>${truncate(order.street)} ${truncate(order.number)}, ${truncate(order.city)}</td>
+                <td>Click</td>
+            </tr>
+        `;
+        tableBody.append(row);
+    });
+}
 
     function updateUser() {
         var password = $('#password').val();
@@ -221,13 +278,18 @@
 
         // Password validation function
         function validatePassword(password) {
-            // var minLength = 6;
-            // var hasUpperCase = /[A-Z]/.test(password);
-            // console.log(hasUpperCase);
+            var minLength = 6;
+            var hasUpperCase = /[A-Z]/.test(password);
+            console.log(hasUpperCase);
             return true;
         }
 
-        fetch('http://localhost:5500/updateUser', {
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        fetch('http://localhost:5500/update_user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -242,7 +304,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                if (data.message === "User updated") {
+                if (data.message !== "User not found") {
                     alert("User updated successfully");
                 } else {
                     alert("Error updating user");
