@@ -91,7 +91,7 @@ function renderMightLikeItems(category, boxNumber) {
     items.forEach(item => {
         const itemDiv = document.createElement('div');
         itemDiv.innerHTML = `
-        <div class="card" onClick="location.href='item.html?id=${item._id}'">
+        <div class="card hover:scale-110 transition" onClick="location.href='item.html?id=${item._id}'">
                 <img src="${item.imgSrc}" alt="${item.name}" class="card-img">
                 <div class="card-info">
                     <span class="card-title">${item.name}</span>
