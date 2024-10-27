@@ -108,12 +108,22 @@ function filterItems(category, gender) {
     const itemsContainer = document.getElementById("items-container");
     itemsContainer.innerHTML = "";
 
-    const filteredItems = itemData.filter(item =>
-        item.tags.includes(category) && (item.gender === gender || item.gender === 'Unisex')
-    );
-
-    console.log(filteredItems);
-    renderItems(filteredItems);
+    fetch('http://localhost:5500/getItems', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.items);
+            const items = data.items;
+            const filteredItems = items.filter(item =>
+                item.tags.includes(category) && (item.gender === gender || item.gender === 'Unisex'));
+            console.log(filteredItems);
+            renderItems(filteredItems);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    // const filteredItems = itemData.filter(item =>
+    //     item.tags.includes(category) && (item.gender === gender || item.gender === 'Unisex')
+    // );
 }
 
 let currentData;
@@ -151,7 +161,7 @@ function renderItems(items, control_panel) {
             const item = items[j];
             const itemDiv = document.createElement('div');
             itemDiv.innerHTML = `
-            <div class="card" onClick="location.href='item.html?id=${item._id}'">
+            <div class="card hover:scale-110 transition" onClick="location.href='item.html?id=${item._id}'">
                 <img src="${item.imgSrc}" alt="${item.name}" class="card-img">
                 <div class="card-info">
                     <span class="card-title">${item.name}</span>

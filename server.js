@@ -526,6 +526,44 @@ app.get("/getOrdersByStatus", async (req, res) => {
     }
 });
 
+// ---------- Search By Input, Gender, Category, Price ----------
+app.get('/searchItems', async (req, res) => {
+    const { search, gender, category, price } = req.query;
+
+    // Initialize query conditions
+    let conditions = {};
+
+    if (search) {
+        // Case-insensitive regex search on the item name and description
+        conditions.$or = [
+            { name: new RegExp(search, 'i') },
+            { description: new RegExp(search, 'i') }
+        ];
+    }
+
+    if (gender && gender !== 'all') {
+        conditions.gender = gender;
+    }
+
+    if (category && category !== 'all') {
+        // Check if the category is in the tags array
+        conditions.tags = { $in: [category] };
+    }
+
+    try {
+        // Sort items based on price
+        let sortCondition = {};
+        if (price === 'low') sortCondition.price = 1;
+        else if (price === 'high') sortCondition.price = -1;
+
+        const items = await Items.find(conditions).sort(sortCondition);
+        res.json({ items });
+    } catch (error) {
+        console.error("Error fetching items:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
 
 
 

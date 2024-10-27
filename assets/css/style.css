@@ -102,8 +102,6 @@ body {
     font-size: 18px;
 }
 
-.item-desc {}
-
 .diverderr {
     width: 100px;
     border-top: 5px solid #131313;
@@ -163,14 +161,26 @@ body {
     border: 3px solid #13131300;
 }
 
-.thebutton:hover {
+.thebutton-search {
+    color: white;
+    background-color: #131313;
+    width: fit-content;
+    border: 3px solid #13131300;
+}
+
+.thebutton-search:hover {
     background-color: white;
     color: #131313;
     border: 3px solid #131313;
     cursor: pointer;
 }
 
-
+.thebutton:hover {
+    background-color: white;
+    color: #131313;
+    border: 3px solid #131313;
+    cursor: pointer;
+}
 
 
 

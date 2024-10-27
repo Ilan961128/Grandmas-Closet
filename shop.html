@@ -77,6 +77,33 @@
     <!-- shop -->
 
     <h1 class="text-5xl font-bold py-8 flex justify-center">SHOP</h1>
+    <div class="flex justify-center gap-4 mb-6">
+        <input placeholder="Search" type="search" id="search" name="search"
+            class="border-2 border-[#131313] p-1.5 w-[25%]" required />
+        <select class="border-2 border-[#] bg-[#b3b3b3] p-1.5 w-[6%]" name="genderdd" id="genderdd">
+            <option value="all">Gender</option>
+            <option value="unisex">Unisex</option>
+            <option value="men">Men</option>
+            <option value="women">Women</option>
+        </select>
+        <select class="border-2 border-[#] bg-[#b3b3b3] p-1.5 w-[6%]" name="categorydd" id="categorydd">
+            <option value="all">Category</option>
+            <option value="shirts">Shirts</option>
+            <option value="hats">Hats</option>
+            <option value="jeans">Jeans</option>
+            <option value="shorts">Shorts</option>
+            <option value="dresses">Dresses</option>
+            <option value="sweater">Sweater</option>
+        </select>
+        <select class="border-2 border-[#] bg-[#b3b3b3] p-1.5 w-[6%]" name="pricedd" id="pricedd">
+            <option value="all">Price</option>
+            <option value="low">Low to High</option>
+            <option value="high">High to Low</option>
+        </select>
+        <div class="border-2 bg-[#131313] text-white p-1.5 w-[8%] font-bold text-center cursor-pointer hover:bg-white hover:border-[#131313] transition hover:text-[#131313] hover:scale-110"
+            onclick="search()">Search</div>
+    </div>
+
     <div class="flex gap-20 justify-between px-32">
         <div class="flex flex-col justify-between">
             <div class="flex flex-col  gap-4">
@@ -179,6 +206,25 @@
         let carNumbers = howManyItemsInCart();
         document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
     };
+
+    function search() {
+        let search = document.getElementById("search").value;
+        let gender = document.getElementById("genderdd").value;
+        let category = document.getElementById("categorydd").value;
+        let price = document.getElementById("pricedd").value;
+
+        console.log(search, gender, category, price);
+
+        fetch(`http://localhost:5500/searchItems?search=${search}&gender=${gender}&category=${category}&price=${price}`)
+            .then(response => response.json())
+            .then(data => {
+                itemData = data.items;
+                console.log(itemData);
+                getAllItems(itemData)
+            })
+            .catch(error => console.error("Error fetching items:", error));
+    }
+
 
     function checkSession() {
         fetch("http://localhost:5500/checkSession")
