@@ -267,13 +267,13 @@
 
             const row = `
             <tr>
-                <td>${truncate(user._id)}</td>
+                <td>${user._id}</td>
                 <td>${truncate(user.first_name)}</td>
                 <td>${truncate(user.last_name)}</td>
                 <td>${truncate(user.email)}</td>
                 <td>${truncate(user.password)}</td>
                 <td>${truncate(user.admin)}</td>
-                <td>${truncate(user.secret_phrase)}</td>
+                <td>${user.secret_phrase}</td>
                 <td>
                     <i onclick="updateUser('${user._id}')" class="fa fa-edit" style="font-size:24px; margin-right: 10px; cursor: pointer"></i>
                     <i onclick="deleteUser('${user._id}')" class="fa fa-trash" style="font-size:24px;color:red; cursor: pointer"></i>

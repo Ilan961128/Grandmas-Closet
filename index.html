@@ -41,6 +41,8 @@
                 <a href="/signin.html" id="signInLink" style="text-decoration: none; color: #131313; display: none;">
                     <span class="header-link">Sign In</span>
                 </a>
+                <a href="/profile.html" id="profileLink" style="text-decoration: none; color: #131313; display: none;">
+                    <span class="header-link">My Profile</span>
                 <a id="signOutLink" onclick="signout()" style="text-decoration: none; color: #131313; display: none;">
                     <span class="header-link">Sign Out</span>
                 </a>
@@ -177,6 +179,7 @@
                 if (data.message === "Authorized") {
                     document.getElementById("signUpLink").style.display = "none";
                     document.getElementById("signInLink").style.display = "none";
+                    document.getElementById("profileLink").style.display = "inline";
                     document.getElementById("signOutLink").style.display = "inline";
                     document.getElementById("icons-container").style.display = "inline";
 
@@ -184,12 +187,14 @@
                     document.getElementById("signUpLink").style.display = "inline";
                     document.getElementById("signInLink").style.display = "inline";
                     document.getElementById("signOutLink").style.display = "none";
+                    document.getElementById("profileLink").style.display = "none";
                     document.getElementById("icons-container").style.display = "none";
                 }
                 else if (data.message === "Admin") {
                     document.getElementById("signUpLink").style.display = "none";
                     document.getElementById("signInLink").style.display = "none";
                     document.getElementById("signOutLink").style.display = "inline";
+                    document.getElementById("profileLink").style.display = "inline";
                     document.getElementById("controlPanelLink").style.display = "inline";
                 }
             })

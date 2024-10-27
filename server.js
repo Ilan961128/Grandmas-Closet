@@ -163,6 +163,18 @@ app.get("/getUserByMail/:email", async (req, res) => {
     }
 });
 
+// ---------- Get User By Session ID ----------
+app.get("/getUserBySession", async (req, res) => {
+    if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const users = await Users.findById(session.user_id);
+        res.status(200).json({ users });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // ------- Check existing email -------- 
 app.get("/check_email/:email", async (req, res) => {
     try {
@@ -425,6 +437,21 @@ app.post("/delete_order/:order_id", async (req, res) => {
         res.status(200).json({ message: "Order deleted successfully" });
     } catch (error) {
         console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// ---------- Get Orders By Session ID ----------
+app.get("/getOrdersBySession", async (req, res) => {
+    if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const orders = await Orders.find({ user_id: session.user_id })
+            .populate("items.item") // Populate the 'item' field within each 'items' subdocument
+            .exec();
+
+        res.status(200).json({ orders });
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 });
