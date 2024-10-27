@@ -53,7 +53,6 @@
                 </a>
             </div>
             <div>
-                <i class="fas fa-search"></i>
                 <a href="cart.html" style="text-decoration: none; color: #131313">
                     <i class="fas fa-shopping-cart"></i>
                 </a>
@@ -63,7 +62,7 @@
 
     <!-- signup -->
     <div class="flex justify-center text-[18px] mt-10">
-        <form action="http://localhost:5500/user" method="post">
+        <form action="http://localhost:5500/user" method="post" class="w-[20%]">
             <h1 class="text-5xl font-bold py-8 flex justify-center">Sign Up</h1>
 
             <div class="form-row flex flex-col">
@@ -96,14 +95,6 @@
 
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword"
-                        class="form-control border-2 border-[#131313]" required />
-                </div>
-
-                <!-- Secret Phrase for Password Reset -->
-                <div class="form-group flex flex-col mb-3">
-
-                    <label for="secretPhrase">Secret Phrase <small>(For password reset. Keep it safe!)</small></label>
-                    <input type="text" id="secretPhrase" name="secretPhrase"
                         class="form-control border-2 border-[#131313]" required />
                 </div>
             </div>
@@ -165,7 +156,6 @@
         var password = $('#password').val();
         var passwordConfirm = $('#confirmPassword').val();
 
-        // Check if passwords match
         if (!validatePassword(password) || password != passwordConfirm) {
             console.log(validatePassword(password));
             console.log(password != confirmPassword);
@@ -175,24 +165,23 @@
         } else {
             $('#errorMessage').addClass('d-none');
         }
-        // Password validation function
         function validatePassword(password) {
-            // var minLength = 6;
-            // var hasUpperCase = /[A-Z]/.test(password);
-            // console.log(hasUpperCase);
-            // var hasLowerCase = /[a-z]/.test(password);
-            // console.log(hasLowerCase);
-            // var hasNumbers = /\d/.test(password);
-            // console.log(hasNumbers);
-            // var hasSpecialChars = /\W/.test(password);
-            // console.log(hasSpecialChars);
-            // return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChars;
+            var minLength = 6;
+            var hasUpperCase = /[A-Z]/.test(password);
+            console.log(hasUpperCase);
+            var hasLowerCase = /[a-z]/.test(password);
+            console.log(hasLowerCase);
+            var hasNumbers = /\d/.test(password);
+            console.log(hasNumbers);
+            var hasSpecialChars = /\W/.test(password);
+            console.log(hasSpecialChars);
+            return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChars;
             return true;
         }
         fetch('http://localhost:5500/check_email/' + $('#email').val())
             .then(response => response.json())
             .then(data => {
-                const message = data.message; // Corrected variable name
+                const message = data.message;
                 if (message === "Exists") {
                     $('#errorMessage').text('Email already exists');
                     $('#errorMessage').removeClass('d-none');
