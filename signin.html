@@ -66,16 +66,19 @@
     <div class="flex justify-center text-[18px]">
         <form method="post">
             <h1 class="text-5xl font-bold py-8 flex justify-center">Sign In</h1>
-
+            <div class="text-red-600" id="errorMessage">
+                Invalid Email or Password.
+            </div>
             <div class="form-row flex flex-col">
                 <label for="email">Email</label>
-                <input value="123@gmail.com" type="email" id="email" name="email" class="form-control border-2 border-[#131313]" required />
+                <input value="123@gmail.com" type="email" id="email" name="email"
+                    class="form-control border-2 border-[#131313]" required />
             </div>
 
             <div class="form-row flex flex-col">
                 <label for="password">Password</label>
-                <input type="password" value="123" id="password" name="password" class="form-control border-2 border-[#131313]"
-                    required />
+                <input type="password" value="123" id="password" name="password"
+                    class="form-control border-2 border-[#131313]" required />
             </div>
 
             <div class="form-group flex justify-center mb-7">
@@ -84,20 +87,17 @@
                 </button>
             </div>
 
-            <div class="text-center">
-                <p>
+            <div class="text-center flex flex-col">
+                <div>
                     Don't have an account?
-                    <a href="SignUp.html">Sign Up!</a>
-                </p>
-                <p>
-                    Forgot your password?
-                    <a href="password_reset.html">Click here</a>
-                </p>
+                </div>
+                <div>
+                    <a href="SignUp.html" class="underline font-bold">Sign Up!</a>
+                </div>
             </div>
-            <div class="alert alert-danger d-none" id="errorMessage" role="alert">
-                Invalid Email or Password.
-            </div>
+
         </form>
+
     </div>
 
     <!-- footer -->
@@ -139,6 +139,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector('form');
+        document.getElementById('errorMessage').style.display = 'none'; // Hide the
 
         form.addEventListener('submit', function (event) {
             var is_logged_in = false;
@@ -161,9 +162,7 @@
                 .then(data => {
                     if (data.users === null) {
                         console.error('Invalid Email or Password.');
-                        const errorMessage = document.getElementById('errorMessage');
-                        errorMessage.classList.remove('d-none'); // Show the error message
-                        // Reset the form to clear the input fields after showing the error message
+                        document.getElementById('errorMessage').style.display = 'inline';
                         form.reset();
                     } else
 
@@ -184,9 +183,7 @@
 
                         } else {
                             console.error('Invalid Email or Password.');
-                            const errorMessage = document.getElementById('errorMessage');
-                            errorMessage.classList.remove('d-none'); // Show the error message
-                            // Reset the form to clear the input fields after showing the error message
+                            document.getElementById('errorMessage').style.display = 'inline';
                             form.reset();
                         }
                 })
