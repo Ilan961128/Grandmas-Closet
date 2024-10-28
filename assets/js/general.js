@@ -18,13 +18,11 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let itemsToShow = 8;
 
 function getFourItemsByCategory(category) {
-    console.log(category);
     return itemData.filter(item => item.tags.includes(category)).slice(0, 4);
 }
 
 
 function showItem(item) {
-    console.log(item);
     const itemContainer = document.getElementById("item-container");
     itemContainer.innerHTML = "";
 
@@ -86,7 +84,6 @@ function renderMightLikeItems(category, boxNumber) {
     mightLikeContainer.innerHTML = "";
 
     const items = getFourItemsByCategory(category);
-    console.log(items);
 
     items.forEach(item => {
         const itemDiv = document.createElement('div');
@@ -111,12 +108,9 @@ function filterItems(category, gender) {
     fetch('http://localhost:5500/getItems', { method: 'GET' })
         .then(response => response.json())
         .then(data => {
-            console.log(data.items);
             const items = data.items;
             const filteredItems = items.filter(item =>
                 item.tags.includes(category) && (item.gender === gender || item.gender === 'unisex'));
-            console.log(filteredItems);
-            renderItems(filteredItems);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -144,7 +138,6 @@ function howManyItemsInCart() {
 }
 
 function renderItems(items, control_panel) {
-    console.log(items);
     const loadMoreContainer = document.getElementById("loadmore");
     const mightLikeContainer = document.getElementById("items-container");
     if (!control_panel) {
@@ -194,7 +187,6 @@ function getItemById(id) {
     fetch('http://localhost:5500/getItemById/' + id, { method: 'GET' })
         .then(response => response.json())
         .then(data => {
-            console.log(data.item);
             return data.item;
         })
         .catch(error => {
@@ -205,7 +197,6 @@ function getItemBAndShowItem(id) {
     fetch('http://localhost:5500/getItemById/' + id, { method: 'GET' })
         .then(response => response.json())
         .then(data => {
-            console.log(data.item);
             showItem(data.item);
         })
         .catch(error => {
@@ -223,7 +214,6 @@ function displayItem() {
 
 // Function to add item to cart based on item ID
 function addToCart(itemId) {
-    console.log(itemId);
     fetch('http://localhost:5500/checkSession')
         .then(response => response.json())
         .then(data => {
@@ -234,7 +224,6 @@ function addToCart(itemId) {
                 fetch('http://localhost:5500/getItemById/' + itemId, { method: 'GET' })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data.item);
                         item = data.item;
                         cart = JSON.parse(localStorage.getItem("cart")) || [];
                         const existingItem = cart.find(cartItem => cartItem._id === item._id && cartItem.size === item.size);
@@ -246,13 +235,10 @@ function addToCart(itemId) {
                         }
 
                         localStorage.setItem("cart", JSON.stringify(cart));
-                        console.log("Item added to cart:", item);
                         let currentCartNum = document.getElementById("cartNum").innerText;
                         currentCartNum = currentCartNum.replace("(", "").replace(")", "");
-                        console.log(currentCartNum);
                         currentCartNum = parseInt(currentCartNum);
                         currentCartNum += 1;
-                        console.log(currentCartNum);
                         document.getElementById("cartNum").innerText = "(" + currentCartNum + ")";
                     })
                     .catch(error => {
@@ -288,9 +274,7 @@ function displayOrderCart(orderId) {
     fetch('http://localhost:5500/getOrderById/' + orderId, { method: 'GET' })
         .then(response => response.json())
         .then(data => {
-            console.log(data.order);
             const cartItems = data.order.items;
-            // const cartItems = getCartItems();
             document.getElementById("empty-cart-message").style.display = "none";
             const cartContainer = document.getElementById("cart-container");
             cartContainer.innerHTML = "";
@@ -341,9 +325,7 @@ function displayMyOrderCart(orderId) {
     fetch('http://localhost:5500/getOrderById/' + orderId, { method: 'GET' })
         .then(response => response.json())
         .then(data => {
-            console.log(data.order);
             const cartItems = data.order.items;
-            // const cartItems = getCartItems();
             document.getElementById("empty-cart-message").style.display = "none";
             const cartContainer = document.getElementById("cart-container");
             cartContainer.innerHTML = "";
@@ -399,7 +381,6 @@ function updateAmountOrder(itemId, operation) {
     cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     const itemIndex = cart.findIndex(item => item._id === itemId);
-    console.log(itemIndex);
     if (itemIndex !== -1) {
         const item = cart[itemIndex];
 
@@ -422,7 +403,6 @@ function displayCart() {
 
     const cartItems = getCartItems();
     if (cartItems.length === 0) {
-        console.log("Cart is empty");
         document.getElementById("empty-cart-message").innerHTML = "Nothing here! Go shopping!";
         document.getElementById("checkOutButton").style.display = "none";
         document.getElementById("totalAmount").style.display = "none";
@@ -495,7 +475,6 @@ function updateAmount(itemId, operation) {
     cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     const itemIndex = cart.findIndex(item => item._id === itemId);
-    console.log(itemIndex);
     if (itemIndex !== -1) {
         const item = cart[itemIndex];
 
@@ -538,7 +517,6 @@ async function checkCartItems(cartItems) {
         fetch('http://localhost:5500/getItemById/' + item._id, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
-                console.log(data.item);
                 if (item.quantity > data.item.quantity) {
                     alert("Not enough stock for " + data.item.name + "!");
                     throw new Error("Not enough stock for " + data.item.name);
@@ -554,7 +532,6 @@ async function checkCartItems(cartItems) {
     try {
         const prices = await Promise.all(fetchPromises);
         totalSum = prices.reduce((sum, price) => sum + price, 0);
-        console.log(totalSum);
 
         var totalDOMamountSTR = document.getElementById("total").innerText;
         var totalDOMamount = parseInt(totalDOMamountSTR);

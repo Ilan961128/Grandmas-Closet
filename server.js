@@ -8,6 +8,11 @@ const Users = require("./models/users");
 const Items = require("./models/items");
 const Orders = require("./models/orders");
 var session = require("express-session");
+const fs = require("fs");
+const https = require("https");
+const multer = require("multer");
+const FormData = require('form-data');
+const upload = multer();
 
 // ---------- Session ----------
 session.user_id = null;
@@ -307,6 +312,35 @@ app.get("/getItemById/:item_id", async (req, res) => {
     }
 });
 
+// ---------- Create Item ----------
+app.post("/create_item", async (req, res) => {
+    try {
+        if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+        var data = {
+            imgSrc: req.body.imgSrc,
+            name: req.body.name,
+            price: req.body.price,
+            size: req.body.size,
+            gender: req.body.gender,
+            description: req.body.description,
+            quantity: req.body.quantity,
+            tags: req.body.tags,
+        };
+
+        var db = mongoose.connection;
+        db.collection("items").insertOne(data, (err, collection) => {
+            if (err) {
+                throw err;
+            }
+        });
+
+        return res.status(200).json({ message: "Item created successfully" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // ---------- Update Item By ID ----------
 app.post("/update_item/:item_id", async (req, res) => {
     if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
@@ -572,8 +606,107 @@ app.get('/searchItems', async (req, res) => {
     }
 });
 
+// ---------- Add Item ----------
+app.post("/addItem", async (req, res) => {
+    // if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const item = new Items(req.body);
+        await item.save();
+        res.status(200).json({ message: "Item added successfully", id: item._id });
+    } catch (error) {
+        console.error("Error adding item:", error);
+        res.status(500).json({ message: error.message });
+    }
+});
 
+// // ---------- Upload Image ----------
+// const IMAGE_API_KEY = process.env.IMAGE_API_KEY;
+// app.post("/uploadImage", upload.single("image"), (req, res) => {
+//     if (!req.file) {
+//         return res.status(400).json({ message: "No image file provided" });
+//     }
 
+//     // Convert the image buffer to a base64 string
+//     const base64Image = req.file.buffer.toString("base64");
+
+//     const postData = JSON.stringify({
+//         key: IMAGE_API_KEY,
+//         image: base64Image,
+//     });
+
+//     const options = {
+//         hostname: "api.imgbb.com",
+//         path: "/1/upload",
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//             "Content-Length": postData.length,
+//         },
+//     };
+
+//     const request = https.request(options, (response) => {
+//         let data = "";
+
+//         response.on("data", (chunk) => {
+//             data += chunk;
+//         });
+
+//         response.on("end", () => {
+//             const jsonData = JSON.parse(data);
+//             console.log(jsonData);
+//             res.json({ url: jsonData.data.url });
+//         });
+//     });
+
+//     request.write(postData);
+//     request.end();
+
+// });
+
+const IMAGE_API_KEY = process.env.IMAGE_API_KEY;
+app.post("/uploadImage", upload.single("image"), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: "No image file provided" });
+    }
+
+    // Convert the image buffer to a base64 string
+    const base64Image = req.file.buffer.toString("base64");
+
+    // Create form data for the request
+    const form = new FormData();
+    form.append("key", IMAGE_API_KEY);
+    form.append("image", base64Image);
+
+    const options = {
+        method: "POST",
+        headers: form.getHeaders(),
+    };
+
+    const request = https.request("https://api.imgbb.com/1/upload", options, (response) => {
+        let data = "";
+
+        response.on("data", (chunk) => {
+            data += chunk;
+        });
+
+        response.on("end", () => {
+            const jsonData = JSON.parse(data);
+            if (jsonData.success) {
+                res.json({ url: jsonData.data.url });
+            } else {
+                res.status(500).json({ message: "Failed to upload image", error: jsonData });
+            }
+        });
+    });
+
+    request.on("error", (error) => {
+        console.error("Error during image upload:", error);
+        res.status(500).json({ message: "Image upload failed", error });
+    });
+
+    // Send form data in the request
+    form.pipe(request);
+});
 
 
 

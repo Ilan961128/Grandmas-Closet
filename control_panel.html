@@ -138,7 +138,6 @@
             .then(response => response.json())
             .then(data => {
                 itemData = data.items;
-                console.log(itemData);
                 getAllItems(itemData, true);
             })
             .catch(error => console.error("Error fetching items:", error));
@@ -152,7 +151,6 @@
         fetch("http://localhost:5500/checkSession")
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 if (data.message === "Authorized") {
                     document.getElementById("signUpLink").style.display = "none";
                     document.getElementById("signInLink").style.display = "none";

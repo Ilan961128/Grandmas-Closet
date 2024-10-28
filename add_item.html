@@ -72,34 +72,34 @@
 
     <!-- add item -->
     <div class="flex justify-center">
-        <div class="h-[1100px] w-[40%] mt-20 z-100">
+        <div class="h-[1100px] w-[40%] mt-14 z-100">
             <div class="flex justify-center">
                 <div>
-                    <h1 class="text-5xl font-bold py-8 flex justify-center">Add Item</h1>
+                    <h1 class="text-5xl font-bold py-12 flex justify-center">Add Item</h1>
                 </div>
             </div>
             <div class="form-row flex flex-col w-[80%] mx-auto">
 
                 <!-- Image -->
                 <div class="form-group flex flex-col mb-3 mx-auto items-center">
-                    <img src="https://placehold.co/200" alt="item" id="itemImage" class="w-[100px] h-[100px] object-fit" />
+                    <img src="https://placehold.co/300" alt="item" id="itemImage"
+                        class="w-[300px] h-[300px] object-fit" />
                     <div>
-                            <input type="file" id="imgSrc" name="image"
-                                class=" mt-2 border-2 border-[#131313] w-fit" required />
-                        </div>
+                        <input type="file" onchange="fileChange()" id="imgSrc" name="image"
+                            class=" mt-2 border-2 border-[#131313] w-fit" required />
+                    </div>
                 </div>
-
 
                 <!-- Name -->
                 <div class="form-group flex flex-col mb-3 ">
 
-                    <label for="name" class="">Name</label>
+                    <label for="name" class="">Item Display Name</label>
                     <input type="text" id="name" name="name" class="form-control border-2 border-[#131313]" required />
                 </div>
 
                 <!-- Price -->
                 <div class="form-group flex flex-col mb-3">
-                    <label for="price" class="">Price</label>
+                    <label for="price" class="">Price (Include VAT)</label>
                     <input type="text" id="price" name="price" class="form-control border-2 border-[#131313]"
                         required />
                 </div>
@@ -107,13 +107,13 @@
                 <!-- Size -->
 
                 <div class="form-group flex flex-col mb-3">
-                    <label for="size" class="">Size</label>
+                    <label for="size" class="">Size (XS, S, M, L, XL, XXL, XXXL)</label>
                     <input type="text" id="size" name="size" class="form-control border-2 border-[#131313]" required />
                 </div>
 
                 <!-- Gender -->
                 <div class="form-group flex flex-col mb-3">
-                    <label for="gender" class="">Gender</label>
+                    <label for="gender" class="">Gender (men/women/unisex)</label>
                     <input type="text" id="gender" name="gender" class="form-control border-2 border-[#131313]"
                         required />
                 </div>
@@ -121,9 +121,8 @@
                 <!-- Description -->
                 <div class="form-group flex flex-col mb-3">
                     <label for="description" class="">Description</label>
-                    <textarea type="text" id="description" name="description"
-                        placeholder="" class="form-control border-2 border-[#131313]" required>
-                        </textarea>
+                    <textarea type="text" id="description" name="description" placeholder=""
+                        class="form-control border-2 border-[#131313]" required></textarea>
                 </div>
 
                 <!-- Quantity -->
@@ -135,16 +134,13 @@
 
                 <!-- Tags -->
                 <div class="form-group flex flex-col mb-3">
-                    <label for="tags" class="">Tags</label>
+                    <label for="tags" class="">Tags (i.e: men,women,dress,shirt)</label>
                     <input type="text" id="tags" name="tags" class="form-control border-2 border-[#131313]" required />
                 </div>
 
                 <div class="form-group flex justify-center flex-col mx-auto">
-                    <button class="thebutton" id="saveChangesBtn">
+                    <button class="thebutton" id="saveChangesBtn" onclick="addItem()">
                         UPDATE
-                    </button>
-                    <button class="thebutton-white bg-red-300" id="cancelChangesBtn">
-                        Cancel
                     </button>
                 </div>
             </div>
@@ -196,6 +192,121 @@
         let carNumbers = howManyItemsInCart();
         document.getElementById("cartNum").innerText = "(" + carNumbers + ")";
     };
+
+    function validateForm() {
+        const name = document.getElementById("name").value;
+        const price = document.getElementById("price").value;
+        const size = document.getElementById("size").value;
+        const gender = document.getElementById("gender").value;
+        const description = document.getElementById("description").value;
+        const quantity = document.getElementById("quantity").value;
+        const tags = document.getElementById("tags").value;
+
+        if (name === "" || price === "" || size === "" || gender === "" || description === "" || quantity === "" || tags === "") {
+            alert("Please fill in all fields");
+            return false;
+        }
+
+        if (isNaN(price) || isNaN(quantity)) {
+            alert("Price and quantity must be numbers");
+            return false;
+        }
+
+        if (size !== "XS" && size !== "S" && size !== "M" && size !== "L" && size !== "XL" && size !== "XXL" && size !== "XXXL") {
+            alert("Size must be XS, S, M, L, XL, XXL, or XXXL");
+            return false;
+        }
+
+        if (gender !== "men" && gender !== "women" && gender !== "unisex") {
+            alert("Gender should be men/women/unisex");
+            return false;
+        }
+
+        return true;
+    }
+
+    function addItem() {
+        if (!validateForm()) {
+            return;
+        }
+
+        const fileInput = document.getElementById("imgSrc");
+        const formData = new FormData();
+        formData.append("image", fileInput.files[0]);
+
+        // Step 1: Upload image to get the URL
+        fetch("http://localhost:5500/uploadImage", {
+            method: "POST",
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                if (data) {
+                    const imageUrl = data.url;
+
+                    // Collecting other item details
+                    const name = document.getElementById("name").value;
+                    const price = document.getElementById("price").value;
+                    const size = document.getElementById("size").value;
+                    const gender = document.getElementById("gender").value;
+                    const description = document.getElementById("description").value;
+                    const quantity = document.getElementById("quantity").value;
+                    const tags = document.getElementById("tags").value;
+
+                    // Convert tags string to an array
+                    const tagsArray = tags.split(",").map(tag => tag.trim());
+
+                    const itemData = {
+                        name,
+                        price,
+                        size,
+                        gender,
+                        description,
+                        quantity,
+                        tags: tagsArray,
+                        imgSrc: imageUrl
+                    };
+
+                    // Step 2: Send item data, including imageUrl, to backend
+                    fetch("http://localhost:5500/addItem", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(itemData),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            if (data.message === "Item added successfully") {
+                                alert("Item added successfully");
+                                window.location.href = `/item.html?id=${data.id}`;
+                            } else {
+                                alert("Error adding item");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
+                } else {
+                    alert("Failed to upload image. Please try again.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error uploading image:", error);
+            });
+    }
+    function fileChange() {
+        const fileInput = document.getElementById("imgSrc");
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById("itemImage").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+
+
 
     function checkSession() {
         fetch("http://localhost:5500/checkSession")
