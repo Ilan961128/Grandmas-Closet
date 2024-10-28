@@ -32,7 +32,10 @@ const itemsSchema = mongoose.Schema({
     tags: {
         type: [String],
         required: [true, "Please specify tags for the item"]
-    }
+    },
+    supplier: {
+        type: String,
+    },
 });
 
 const Item = mongoose.model('items', itemsSchema);

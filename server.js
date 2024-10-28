@@ -24,6 +24,11 @@ const checkSession = (user_type = 0) => {
             return false;
         }
     }
+    else if (user_type == "supplier") {
+        if (session.admin === null) {
+            return false;
+        }
+    }
     else
         if (session.user_id === null) {
             return false;
@@ -312,6 +317,18 @@ app.get("/getItemById/:item_id", async (req, res) => {
     }
 });
 
+// ---------- Get Items By User Session ID ----------
+app.get("/getItemsBySession", async (req, res) => {
+    if (!checkSession("user")) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const items = await Items.find({ supplier: session.user_id });
+        res.status(200).json({ items });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // ---------- Create Item ----------
 app.post("/create_item", async (req, res) => {
     try {
@@ -343,7 +360,7 @@ app.post("/create_item", async (req, res) => {
 
 // ---------- Update Item By ID ----------
 app.post("/update_item/:item_id", async (req, res) => {
-    if (!checkSession("admin")) return res.status(401).json({ message: "Unauthorized" });
+    if (!checkSession("admin") || !checkSession("supplier")) return res.status(401).json({ message: "Unauthorized" });
     const item_id = req.params.item_id;
     try {
         var data = {
@@ -355,7 +372,10 @@ app.post("/update_item/:item_id", async (req, res) => {
             quantity: req.body.quantity,
             imgSrc: req.body.imgSrc,
             tags: req.body.tags,
+            supplier: req.body.supplier,
         };
+
+        console.log(data);
 
         const updatedFields = data;
         const updatedItem = await Items.findByIdAndUpdate(item_id, updatedFields, {
