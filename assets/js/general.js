@@ -176,7 +176,7 @@ function renderItems(items, control_panel) {
             }
         }
 
-        
+
 
         currentData = items;
     }
@@ -347,14 +347,12 @@ function displayMyOrderCart(orderId) {
             table.appendChild(header);
 
             const body = document.createElement('tbody');
-            let totalAmount = 0;
+
+            console.log(cartItems);
 
             cartItems.forEach(item => {
                 const row = document.createElement('tr');
                 row.classList.add('border-b');
-
-                const itemTotal = item.quantity * item.item.price;
-                totalAmount += itemTotal;
 
                 row.innerHTML = `
                         <td class="py-2 px-4">
@@ -363,7 +361,7 @@ function displayMyOrderCart(orderId) {
                         </td>
                         <td class="py-2 px-4">${item.item.size}</td>
                         <td class="py-2 px-4">${item.item.gender}</td>
-                        <td class="py-2 px-4">${item.item.quantity}</td>
+                        <td class="py-2 px-4">${item.quantity}</td>
                         <td class="py-2 px-4">${item.item.price}</td>
                     `;
                 body.appendChild(row);
@@ -371,10 +369,12 @@ function displayMyOrderCart(orderId) {
 
             table.appendChild(body);
             cartContainer.appendChild(table);
+            return cartItems;
         })
         .catch(error => {
             console.error("Error:", error);
         });
+
 }
 
 function updateAmountOrder(itemId, operation) {
