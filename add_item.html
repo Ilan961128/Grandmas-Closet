@@ -244,7 +244,8 @@
                     <!-- ID -->
                     <div class="form-group flex flex-col mb-3 ">
                         <label for="id" class="text-white">ID</label>
-                        <input type="text" id="idModal" name="id" class="form-control border-2 border-[#131313]" disabled />
+                        <input type="text" id="idModal" name="id" class="form-control border-2 border-[#131313]"
+                            disabled />
                     </div>
 
                     <!-- Name -->
@@ -288,8 +289,8 @@
                     <!-- Quantity -->
                     <div class="form-group flex flex-col mb-3">
                         <label for="quantity" class="text-white">Quantity</label>
-                        <input type="text" id="quantityModal" name="quantity" class="form-control border-2 border-[#131313]"
-                            required />
+                        <input type="text" id="quantityModal" name="quantity"
+                            class="form-control border-2 border-[#131313]" required />
                     </div>
 
                     <!-- Tags -->
@@ -302,8 +303,8 @@
                     <!-- Supplier -->
                     <div class="form-group flex flex-col mb-3">
                         <label for="supplier" class="text-white">Supplier</label>
-                        <input type="text" id="supplierModal" name="supplier" class="form-control border-2 border-[#131313]"
-                            required />
+                        <input type="text" id="supplierModal" name="supplier"
+                            class="form-control border-2 border-[#131313]" required />
                     </div>
 
                     <div class="form-group flex justify-center flex-col mx-auto">
@@ -421,36 +422,52 @@
                     // Convert tags string to an array
                     const tagsArray = tags.split(",").map(tag => tag.trim());
 
-                    const itemData = {
-                        name,
-                        price,
-                        size,
-                        gender,
-                        description,
-                        quantity,
-                        tags: tagsArray,
-                        imgSrc: imageUrl
-                    };
+                    let userSessionID;
 
-                    // Step 2: Send item data, including imageUrl, to backend
-                    fetch("http://localhost:5500/addItem", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(itemData),
-                    })
+                    fetch("http://localhost:5500/getUserBySession")
                         .then(response => response.json())
                         .then(data => {
                             console.log(data);
-                            if (data.message === "Item added successfully") {
-                                alert("Item added successfully");
-                                window.location.href = `/item.html?id=${data.id}`;
-                            } else {
-                                alert("Error adding item");
-                            }
+                            user = data.users;
+                            userSessionID = user._id;
+                            console.log(userSessionID);
+
+                            const itemData = {
+                                name,
+                                price,
+                                size,
+                                gender,
+                                description,
+                                quantity,
+                                tags: tagsArray,
+                                imgSrc: imageUrl,
+                                supplier: userSessionID
+                            };
+
+
+
+                            // Step 2: Send item data, including imageUrl, to backend
+                            fetch("http://localhost:5500/addItem", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(itemData),
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data);
+                                    if (data.message === "Item added successfully") {
+                                        // alert("Item added successfully");
+                                        // window.location.href = `/item.html?id=${data.id}`;
+                                        console.log("done add item")
+                                    } else {
+                                        alert("Error adding item");
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error:", error);
+                                });
                         })
-                        .catch(error => {
-                            console.error("Error:", error);
-                        });
+                        .catch(error => console.error("Error fetching user:", error));
                 } else {
                     alert("Failed to upload image. Please try again.");
                 }
