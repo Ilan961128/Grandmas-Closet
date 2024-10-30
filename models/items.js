@@ -34,7 +34,7 @@ const itemsSchema = mongoose.Schema({
         required: [true, "Please specify tags for the item"]
     },
     supplier: {
-        type: String,
+        type: String, 
     },
 });
 
