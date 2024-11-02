@@ -413,10 +413,9 @@ app.post("/delete_item/:item_id", async (req, res) => {
 });
 
 // ---------- Create Order ----------
-
 app.post("/create_order", async (req, res) => {
     try {
-        var data = {
+        const data = {
             items: req.body.items,
             user_id: session.user_id,
             first_name: req.body.first_name,
@@ -432,12 +431,27 @@ app.post("/create_order", async (req, res) => {
 
         console.log(data);
 
-        var db = mongoose.connection;
-        db.collection("orders").insertOne(data, (err, collection) => {
-            if (err) {
-                throw err;
+        const db = mongoose.connection;
+
+        await db.collection("orders").insertOne(data);
+
+        for (const orderedItem of data.items) {
+            const { item, quantity } = orderedItem;
+            console.log(item, quantity);
+
+            const updateResult = await db.collection("items").updateOne(
+                { _id: new mongoose.Types.ObjectId(item) },
+                { $inc: { quantity: -quantity } }
+            );
+
+            if (updateResult.matchedCount === 0) {
+                throw new Error(`Item with ID ${item} not found in inventory.`);
             }
-        });
+
+            if (updateResult.modifiedCount === 0) {
+                throw new Error(`Failed to update quantity for item with ID ${item}.`);
+            }
+        }
 
         return res.status(200).json({ message: "Order created successfully" });
 

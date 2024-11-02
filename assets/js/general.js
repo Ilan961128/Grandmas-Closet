@@ -111,10 +111,14 @@ function filterItems(category, gender) {
             const items = data.items;
             const filteredItems = items.filter(item =>
                 item.tags.includes(category) && (item.gender === gender || item.gender === 'unisex'));
+
+            renderItems(filteredItems);
         })
         .catch(error => {
             console.error("Error:", error);
         });
+
+
     // const filteredItems = itemData.filter(item =>
     //     item.tags.includes(category) && (item.gender === gender || item.gender === 'Unisex')
     // );
